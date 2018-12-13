@@ -261,10 +261,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 986231203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56e76d465a71974a935e2deaa6260cc, type: 3}
+  m_Script: {fileID: 11500000, guid: d43b8b33e651eb84a9eb3445a1ad9f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {fileID: 2090083010}
+  GazeAction: 1
+  MaxGazeRange: 50
+  ProximityAction: 1
+  MaxProximityRange: 10
 --- !u!135 &986231206
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -371,6 +374,8 @@ GameObject:
   - component: {fileID: 2090083012}
   - component: {fileID: 2090083011}
   - component: {fileID: 2090083016}
+  - component: {fileID: 2090083018}
+  - component: {fileID: 2090083017}
   - component: {fileID: 2090083015}
   m_Layer: 0
   m_Name: Cube
@@ -457,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7439a14d5768915469a7eafda405883f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ReactionName: Potato
+  ReactionName: positionReaction
   NewPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2090083016
 MonoBehaviour:
@@ -470,6 +475,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3ab801af5e0b641a1838fdabbb316b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpecifyReactions: 0
-  ReactionNames: []
-  TriggerDistance: 1
+  SpecifyReactions: 1
+  ReactionNames:
+  - colorReaction
+  TriggerDistance: 3
+--- !u!114 &2090083017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2090083010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0389cd6480182244583c9923a64e15eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReactionName: colorReaction
+  NewColor: {r: 0.8018868, g: 0.16264686, b: 0.16264686, a: 0}
+--- !u!114 &2090083018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2090083010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21a74106c8f6e1459a521fa0ea390f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpecifyReactions: 1
+  ReactionNames:
+  - positionReaction

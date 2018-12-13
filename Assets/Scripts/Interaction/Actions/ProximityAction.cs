@@ -8,8 +8,9 @@ namespace Interaction.Actions
         public float TriggerDistance = 1f;
 
 
-        public bool Trigger(float distance)
+        public bool Trigger(Actor actor)
         {
+            var distance = (actor.transform.position - transform.position).magnitude;
             if (distance <= TriggerDistance)
             {
                 foreach (var reaction in Reactions)

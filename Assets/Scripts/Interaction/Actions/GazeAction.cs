@@ -5,7 +5,7 @@ namespace Interaction.Actions
     public class GazeAction : Action
     {
 
-        public bool Trigger(Vector3 contactPoint)
+        public bool Trigger(Actor actor, RaycastHit hit)
         {
             foreach (var reaction in Reactions)
             {

@@ -16,10 +16,17 @@ namespace Interaction.Actions
 
 
         protected List<Reaction> Reactions = new List<Reaction>();
+        
 
-        void Start()
+        private void Start()
         {
-            Reaction[] reactions = GetComponents<Reaction>();
+            gameObject.layer = LayerMask.NameToLayer("Interactable");
+            UpdateReactions();
+        }
+
+        private void UpdateReactions()
+        {
+            var reactions = GetComponents<Reaction>();
             if (!SpecifyReactions || ReactionNames.Count == 0)
             {
                 Reactions = new List<Reaction>(reactions);
