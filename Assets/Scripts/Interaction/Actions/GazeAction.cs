@@ -9,7 +9,7 @@ namespace Interaction.Actions
         {
             foreach (var reaction in Reactions)
             {
-                reaction.React();
+                reaction.ReactToAction();
             }
 
             return true;

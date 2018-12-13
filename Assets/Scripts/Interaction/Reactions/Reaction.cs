@@ -7,7 +7,20 @@ namespace Interaction.Reactions
         [Tooltip("Give the reaction a unique name to identify it.")]
         public string ReactionName;
 
+        [Tooltip("The amount of time in seconds to wait before reacting again.")]
+        public float Cooldown;
 
-        public abstract bool React();
+        private float _lastReaction;
+
+        protected abstract bool React();
+
+        public bool ReactToAction()
+        {
+            if (Time.time < _lastReaction + Cooldown)
+                return false;
+            
+            _lastReaction = Time.time;
+            return React();
+        }
     }
 }

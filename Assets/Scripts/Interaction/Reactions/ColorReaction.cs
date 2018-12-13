@@ -15,7 +15,7 @@ namespace Interaction.Reactions
             _renderer = GetComponent<Renderer>();
         }
 
-        public override bool React()
+        protected override bool React()
         {
             _renderer.material.color = NewColor;
             return true;
