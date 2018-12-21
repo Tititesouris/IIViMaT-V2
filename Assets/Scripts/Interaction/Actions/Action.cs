@@ -16,7 +16,7 @@ namespace Interaction.Actions
 
 
         protected List<Reaction> Reactions = new List<Reaction>();
-        
+
 
         private void Start()
         {
@@ -27,11 +27,8 @@ namespace Interaction.Actions
         private void UpdateReactions()
         {
             var reactions = GetComponents<Reaction>();
-            if (!SpecifyReactions || ReactionNames.Count == 0)
-            {
-                Reactions = new List<Reaction>(reactions);
-            }
-            else
+
+            if (SpecifyReactions)
             {
                 foreach (var reaction in reactions)
                 {
@@ -40,6 +37,10 @@ namespace Interaction.Actions
                         Reactions.Add(reaction);
                     }
                 }
+            }
+            else
+            {
+                Reactions = new List<Reaction>(reactions);
             }
         }
     }
