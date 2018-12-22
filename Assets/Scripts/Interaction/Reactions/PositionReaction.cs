@@ -8,17 +8,17 @@ namespace Interaction.Reactions
         public Vector3 NewPosition;
 
         [Tooltip(
-            "If enabled, the new position will be relative to the current position. If disabled, the new position will be relative to world coordinates.")]
-        public bool RelativeNewPosition;
-
-        [Tooltip(
             "If enabled, the new position will be a random position centered around [New Position] within a range of [Random Range].")]
         public bool RandomNewPosition;
 
         [Tooltip("The new position will be randomized within this range.")]
         public Vector3 RandomRange = Vector3.one;
 
-        protected override bool React()
+        [Tooltip(
+            "If enabled, the new position will be relative to the current position. If disabled, the new position will be relative to world coordinates.")]
+        public bool RelativeNewPosition;
+
+        protected override bool React(Actor actor, RaycastHit? hit)
         {
             var newPosition = transform.position;
             if (RelativeNewPosition)

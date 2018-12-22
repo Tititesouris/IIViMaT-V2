@@ -265,7 +265,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GazeAction: 1
+  Gaze360Action: 1
   MaxGazeRange: 50
+  GoThroughObjects: 1
+  NbObjectsToTrigger: 2
   ProximityAction: 1
   MaxProximityRange: 10
 --- !u!135 &986231206

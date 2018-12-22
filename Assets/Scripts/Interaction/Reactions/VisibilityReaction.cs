@@ -11,7 +11,7 @@ namespace Interaction.Reactions
         public bool ToggleVisibility;
 
 
-        protected override bool React()
+        protected override bool React(Actor actor, RaycastHit? hit)
         {
             var meshRenderer = GetComponent<MeshRenderer>();
             if (ToggleVisibility)

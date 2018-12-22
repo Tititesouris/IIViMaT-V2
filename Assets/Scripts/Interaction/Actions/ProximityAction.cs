@@ -4,7 +4,7 @@ namespace Interaction.Actions
 {
     public class ProximityAction : Action
     {
-        [Tooltip("The reactions will be triggered if the actor is in this radius.")]
+        [Tooltip("The reactions will be triggered if the actor is within this distance.")]
         public float TriggerDistance = 1f;
 
 
@@ -15,7 +15,7 @@ namespace Interaction.Actions
             {
                 foreach (var reaction in Reactions)
                 {
-                    reaction.ReactToAction();
+                    reaction.ReactToAction(actor, null);
                 }
 
                 return true;
