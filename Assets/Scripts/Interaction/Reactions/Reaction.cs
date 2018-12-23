@@ -7,19 +7,6 @@ namespace Interaction.Reactions
 {
     public abstract class Reaction : MonoBehaviour
     {
-        protected static Random Rnd;
-
-        private float _lastReaction;
-
-        private IEnumerator _reactAfterDelayCoroutine;
-
-        private bool _triggered;
-
-        [Tooltip("The amount of time in seconds to wait before reacting again.")]
-        public float cooldown;
-
-        [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
-        public float delay;
         // TODO: Random cooldown
         // TODO: Random delay
 
@@ -34,6 +21,20 @@ namespace Interaction.Reactions
         [Tooltip("If enabled, the reaction will only be triggered once.")]
         public bool triggerOnlyOnce;
 
+        [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
+        public float delay;
+
+        [Tooltip("The amount of time in seconds to wait before reacting again.")]
+        public float cooldown;
+
+        protected static Random Rnd;
+
+        private bool _triggered;
+        
+        private float _lastReaction;
+
+        private IEnumerator _reactAfterDelayCoroutine;
+
         private void Start()
         {
             if (Rnd == null)
@@ -46,14 +47,14 @@ namespace Interaction.Reactions
         {
             if (triggerOnlyOnce && _triggered)
                 return false;
-
+            
             _triggered = true;
-
+            
             if (Time.time < _lastReaction + cooldown)
                 return false;
 
             _lastReaction = Time.time;
-
+            
             if (delay > 0)
             {
                 _reactAfterDelayCoroutine = ReactAfterDelay(actor, hit, delay);

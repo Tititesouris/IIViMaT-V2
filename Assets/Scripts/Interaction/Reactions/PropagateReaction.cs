@@ -7,11 +7,14 @@ namespace Interaction.Reactions
 {
     public class PropagateReaction : Reaction
     {
-        [Tooltip("The number of targets that will be triggered.")]
-        public int nbPropagations = 1;
+        [Tooltip("List of the objects that will be triggered.")]
+        public GameObject[] targets;
 
         [Tooltip("If enabled, trigger all targets.")]
         public bool propagateAll = true;
+
+        [Tooltip("The number of targets that will be triggered.")]
+        public int nbPropagations = 1;
 
         [Tooltip("If enabled, [Nb Propagations] random targets will be triggered." +
                  "If disabled, the first [Nb Propagations] targets will be triggered.")]
@@ -19,9 +22,6 @@ namespace Interaction.Reactions
 
         [Tooltip("If enabled, the targets triggered will be removed from the list and thus cannot be triggered again.")]
         public bool removeTargetOnPropagation;
-
-        [Tooltip("List of the objects that will be triggered.")]
-        public GameObject[] targets;
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
