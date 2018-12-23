@@ -1,22 +1,23 @@
-﻿using UnityEngine;
+﻿using Interaction.Actors;
+using UnityEngine;
 
 namespace Interaction.Actions
 {
     public class ProximityAction : Action
     {
         [Tooltip("The reactions will be triggered if the actor is within this distance.")]
-        public float TriggerDistance = 1f;
+        public float triggerDistance = 1f;
+
+        [Tooltip(
+            "If enabled, the reactions will only be triggered if the actor is within a distance of [Trigger Distance].")]
+        public bool triggerOnlyInRange;
 
 
         public bool Trigger(Actor actor)
         {
-            var distance = (actor.transform.position - transform.position).magnitude;
-            if (distance <= TriggerDistance)
+            if (!triggerOnlyInRange || (actor.transform.position - transform.position).magnitude < triggerDistance)
             {
-                foreach (var reaction in Reactions)
-                {
-                    reaction.ReactToAction(actor, null);
-                }
+                foreach (var reaction in Reactions) reaction.ReactToAction(actor, null);
 
                 return true;
             }

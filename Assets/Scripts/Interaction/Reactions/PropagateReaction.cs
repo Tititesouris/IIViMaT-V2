@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Interaction.Actions;
+using Interaction.Actors;
 using UnityEngine;
 
 namespace Interaction.Reactions
@@ -7,39 +8,33 @@ namespace Interaction.Reactions
     public class PropagateReaction : Reaction
     {
         [Tooltip("The number of targets that will be triggered.")]
-        public int NbPropagations;
+        public int nbPropagations;
 
-        [Tooltip("If enabled, [NbPropagations] random targets will be triggered." +
-                 "If disabled, the first [NbPropagations] targets will be triggered.")]
-        public bool RandomPropagation;
+        [Tooltip("If enabled, [Nb Propagations] random targets will be triggered." +
+                 "If disabled, the first [Nb Propagations] targets will be triggered.")]
+        public bool randomPropagation;
 
         [Tooltip("If enabled, the targets triggered will be removed from the list and thus cannot be triggered again.")]
-        public bool RemoveTargetOnPropagation;
+        public bool removeTargetOnPropagation;
 
         [Tooltip("List of the objects that will be triggered.")]
-        public GameObject[] Targets;
+        public GameObject[] targets;
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
-            var targets = (RandomPropagation ? Targets.OrderBy(x => rnd.Next()).ToArray() : Targets)
-                .Take(NbPropagations).ToArray();
-            foreach (var target in targets)
+            var selectedTargets = (randomPropagation ? targets.OrderBy(x => Rnd.Next()).ToArray() : targets)
+                .Take(nbPropagations).ToArray();
+            foreach (var target in selectedTargets)
             {
                 var actions = target.GetComponents<Action>();
                 foreach (var action in actions)
                 {
                     var propagatedAction = action as PropagatedAction;
-                    if (propagatedAction != null)
-                    {
-                        propagatedAction.Trigger(actor, hit, gameObject);
-                    }
+                    if (propagatedAction != null) propagatedAction.Trigger(actor, hit, gameObject);
                 }
             }
 
-            if (RemoveTargetOnPropagation)
-            {
-                Targets = Targets.Where(x => !targets.Contains(x)).ToArray();
-            }
+            if (removeTargetOnPropagation) targets = targets.Where(x => !selectedTargets.Contains(x)).ToArray();
 
             return true;
         }

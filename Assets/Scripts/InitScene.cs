@@ -1,32 +1,31 @@
 ﻿using System.Collections;
-using System.Runtime;
 using UnityEngine;
-using UnityEngine.VR;
-using Valve.VR;
+using UnityEngine.XR;
 
-public class InitScene : MonoBehaviour {
-    
-	void Start () {
-        DisableVR();
-	}
-	
-	void Update () {
-		
-	}
-
-    IEnumerator LoadDevice(string newDevice, bool enable)
+public class InitScene : MonoBehaviour
+{
+    private void Start()
     {
-        VRSettings.LoadDeviceByName(newDevice);
-        yield return null;
-        VRSettings.enabled = enable;
+        DisableVR();
     }
 
-    void EnableVR()
+    private void Update()
+    {
+    }
+
+    private IEnumerator LoadDevice(string newDevice, bool enable)
+    {
+        XRSettings.LoadDeviceByName(newDevice);
+        yield return null;
+        XRSettings.enabled = enable;
+    }
+
+    private void EnableVR()
     {
         StartCoroutine(LoadDevice("SteamVR", true));
     }
 
-    void DisableVR()
+    private void DisableVR()
     {
         StartCoroutine(LoadDevice("None", false));
     }

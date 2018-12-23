@@ -1,35 +1,36 @@
-﻿using Interaction.Actions;
+﻿using System.Linq;
+using Interaction.Actions;
 using UnityEngine;
 
-namespace Interaction
+namespace Interaction.Actors
 {
-    public class Actor : MonoBehaviour
+    public class CameraActor : Actor
     {
         private static int _interactableLayerMask;
 
-        [Tooltip("If enabled, the actor will trigger gaze actions in 360 spheres.")]
-        public bool Gaze360Action = true;
-
-        [Header("Gaze")] [Tooltip("If enabled, the actor will trigger gaze actions.")]
-        public bool GazeAction = true;
-
         [Tooltip("If enabled, the gaze will go through objects. If disabled, it will stop when hitting an object.")]
-        public bool GoThroughObjects = true;
+        public bool goThroughObjects = true;
 
         [Tooltip("The actor will not trigger gaze actions on object that are further away.")]
-        public float MaxGazeRange = 50f;
+        public float maxGazeRange = 50f;
 
         [Tooltip("The actor will not trigger proximity actions on object that are further away.")]
-        public float MaxProximityRange = 10f;
+        public float maxProximityRange = 10f;
 
         [Tooltip("If set to 1, the gaze will only trigger reactions on the first object with reactions in its path." +
                  "If set to another number, the gaze will trigger reactions on up to that number of object with reactions in its path.")]
         [Range(1, 10)]
-        public int NbObjectsToTrigger = 1;
+        public int nbObjectsToTrigger = 1;
 
+        [Tooltip("If enabled, the actor will trigger gaze actions in 360 spheres.")]
+        public bool triggerGaze360Actions = true;
+
+
+        [Header("Gaze")] [Tooltip("If enabled, the actor will trigger gaze actions.")]
+        public bool triggerGazeActions = true;
 
         [Header("Proximity")] [Tooltip("If enabled, the actor will trigger proximity actions.")]
-        public bool ProximityAction = true;
+        public bool triggerProximityActions = true;
 
         private void Awake()
         {
@@ -38,17 +39,17 @@ namespace Interaction
 
         private void Update()
         {
-            if (GazeAction)
-                Gaze();
-            if (Gaze360Action)
-                Gaze360();
-            if (ProximityAction)
-                Proximity();
+            if (triggerProximityActions)
+                ProximityTriggers();
+            if (triggerGazeActions)
+                GazeTriggers();
+            if (triggerGaze360Actions)
+                Gaze360Triggers();
         }
 
-        private bool Proximity()
+        private bool ProximityTriggers()
         {
-            var hitColliders = Physics.OverlapSphere(transform.position, MaxProximityRange, _interactableLayerMask);
+            var hitColliders = Physics.OverlapSphere(transform.position, maxProximityRange, _interactableLayerMask);
             foreach (var hitCollider in hitColliders)
             {
                 var hitObject = hitCollider.gameObject;
@@ -56,21 +57,18 @@ namespace Interaction
                 foreach (var action in actions)
                 {
                     var proximityAction = action as ProximityAction;
-                    if (proximityAction != null)
-                    {
-                        proximityAction.Trigger(this);
-                    }
+                    if (proximityAction != null) proximityAction.Trigger(this);
                 }
             }
 
             return hitColliders.Length > 0;
         }
 
-        private bool Gaze()
+        private bool GazeTriggers()
         {
-            var hits = new RaycastHit[NbObjectsToTrigger];
-            if (Physics.RaycastNonAlloc(transform.position, transform.forward, hits, MaxGazeRange,
-                    _interactableLayerMask) > 0)
+            var hits = Physics.RaycastAll(transform.position, transform.forward, maxGazeRange, _interactableLayerMask);
+            hits = hits.OrderBy(hit => hit.distance).ToArray();
+            if (hits.Length > 0)
             {
                 var nbTriggered = 0;
                 foreach (var hit in hits)
@@ -87,37 +85,37 @@ namespace Interaction
                         }
                     }
 
-                    if (!GoThroughObjects || NbObjectsToTrigger <= nbTriggered)
+                    if (!goThroughObjects || nbObjectsToTrigger <= nbTriggered)
                         return true;
                 }
 
-                return true;
+                return nbTriggered > 0;
             }
 
             return false;
         }
 
-        private bool Gaze360()
+        private bool Gaze360Triggers()
         {
             // Rays don't hit the object they come from inside of. Solution:
             // Make ray come from outside towards actor. Take the last hit object, it will be the 360 sphere.
-            var hits = Physics.RaycastAll(transform.position + transform.forward * MaxGazeRange, -transform.forward,
-                MaxGazeRange, _interactableLayerMask);
+            var hits = Physics.RaycastAll(transform.position + transform.forward * maxGazeRange, -transform.forward,
+                maxGazeRange, _interactableLayerMask);
             if (hits.Length > 0)
             {
-                var hit = hits[hits.Length - 1];
+                var hit = hits.OrderBy(x => x.distance).Last();
                 var hitObject = hit.transform.gameObject;
                 var actions = hitObject.GetComponents<Action>();
                 foreach (var action in actions)
                 {
-                    var gazeAction = action as GazeAction;
+                    /*var gazeAction = action as GazeAction;
                     if (gazeAction != null)
                     {
                         gazeAction.Trigger(this, hit);
-                    }
+                    }*/
                 }
 
-                return true;
+                //return nbTriggered > 0;
             }
 
             return false;

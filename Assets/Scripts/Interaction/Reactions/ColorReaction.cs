@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Interaction.Actors;
+using UnityEngine;
 
 namespace Interaction.Reactions
 {
@@ -7,18 +8,18 @@ namespace Interaction.Reactions
         private Renderer _renderer;
 
         [Tooltip("The new color will be randomized up to this color.")]
-        public Color MaxRandomColor;
+        public Color maxRandomColor;
 
         [Tooltip("The color the object will have after reacting.")]
-        public Color NewColor;
+        public Color newColor;
 
         [Tooltip(
             "If enabled, the new color will be a random color between [New Color] and [Max Random Color].")]
-        public bool RandomNewColor;
+        public bool randomNewColor;
 
         [Tooltip(
             "If enabled, the new color will be relative to the current color. If disabled, the new color will be relative to black.")]
-        public bool RelativeNewColor;
+        public bool relativeNewColor;
 
         private void Start()
         {
@@ -27,26 +28,20 @@ namespace Interaction.Reactions
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
-            var newColor = _renderer.material.color;
-            if (RelativeNewColor)
-            {
-                newColor += NewColor;
-            }
+            var color = _renderer.material.color;
+            if (relativeNewColor) // TODO: Bug, there is no negative color so relative always increases
+                color += newColor;
             else
-            {
-                newColor = NewColor;
-            }
+                color = newColor;
 
-            if (RandomNewColor)
-            {
-                newColor = new Color(
-                    Random.Range(NewColor.r, MaxRandomColor.r),
-                    Random.Range(NewColor.g, MaxRandomColor.g),
-                    Random.Range(NewColor.b, MaxRandomColor.b)
+            if (randomNewColor)
+                color = new Color(
+                    Random.Range(newColor.r, maxRandomColor.r),
+                    Random.Range(newColor.g, maxRandomColor.g),
+                    Random.Range(newColor.b, maxRandomColor.b)
                 );
-            }
 
-            _renderer.material.color = newColor;
+            _renderer.material.color = color;
             return true;
         }
     }

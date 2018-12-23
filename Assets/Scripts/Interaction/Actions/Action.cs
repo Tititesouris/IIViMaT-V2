@@ -6,22 +6,22 @@ using UnityEngine;
 
 namespace Interaction.Actions
 {
-    public class Action : MonoBehaviour
+    public abstract class Action : MonoBehaviour
     {
         [Tooltip("List all the reactions that will be triggered.")]
-        public List<string> ReactionNames = new List<string>();
+        public List<string> reactionNames = new List<string>();
 
         // TODO: Give option to only trigger reactions with an AND or a XOR of actions
 
         protected List<Reaction> Reactions = new List<Reaction>();
 
         [Header("Reactions")] [Tooltip("If enabled, allows you to specify which reactions to trigger.")]
-        public bool SpecifyReactions;
-
+        public bool specifyReactions;
 
         private void Start()
         {
             gameObject.layer = LayerMask.NameToLayer("Interactable");
+            gameObject.tag = "Interactable"; // TODO: If video360 is interactable, it loses its 360Video tag
             UpdateReactions();
         }
 
@@ -29,20 +29,12 @@ namespace Interaction.Actions
         {
             var reactions = GetComponents<Reaction>();
 
-            if (SpecifyReactions)
-            {
+            if (specifyReactions)
                 foreach (var reaction in reactions)
-                {
-                    if (ReactionNames.Contains(reaction.ReactionName, StringComparer.OrdinalIgnoreCase))
-                    {
+                    if (reactionNames.Contains(reaction.reactionName, StringComparer.OrdinalIgnoreCase))
                         Reactions.Add(reaction);
-                    }
-                }
-            }
-            else
-            {
-                Reactions = new List<Reaction>(reactions);
-            }
+                    else
+                        Reactions = new List<Reaction>(reactions);
         }
     }
 }
