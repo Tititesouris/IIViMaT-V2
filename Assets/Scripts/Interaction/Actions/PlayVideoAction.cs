@@ -1,5 +1,4 @@
-﻿using System;
-using Interaction.Actors;
+﻿using Interaction.Actors;
 
 namespace Interaction.Actions
 {
@@ -7,7 +6,9 @@ namespace Interaction.Actions
     {
         public bool Trigger(Actor actor)
         {
-            throw new NotImplementedException();
+            foreach (var reaction in Reactions) reaction.ReactToAction(actor, null);
+
+            return true;
         }
     }
 }

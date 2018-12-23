@@ -13,10 +13,6 @@ namespace Interaction.Actors
 
         private bool _playing;
 
-        // TODO: Option Trigger every x seconds
-
-        // TODO: Trigger on play/pause/stop
-
         private VideoPlayer _videoPlayer;
 
         [Tooltip("The time in seconds between every VideoTime action.")]
@@ -24,6 +20,10 @@ namespace Interaction.Actors
 
         [Tooltip("If enabled the actor will trigger PauseVideo action.")]
         public bool triggerPauseVideoActions = true;
+
+        // TODO: Option Trigger every x seconds
+
+        // TODO: Trigger on play/pause/stop
 
         [Tooltip("If enabled the actor will trigger PlayVideo action.")]
         public bool triggerPlayVideoActions = true;

@@ -7,14 +7,6 @@ namespace Interaction.Reactions
 {
     public abstract class Reaction : MonoBehaviour
     {
-        // TODO: Random cooldown
-        // TODO: Random delay
-
-        // TODO: Option to interpolate over cooldown time
-        // TODO: Option to loop for x seconds
-        // TODO: Option to loop indefinitely
-        // TODO: Option to loop until triggered again
-
         protected static Random Rnd;
 
         private float _lastReaction;
@@ -26,6 +18,13 @@ namespace Interaction.Reactions
 
         [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
         public float delay;
+        // TODO: Random cooldown
+        // TODO: Random delay
+
+        // TODO: Option to interpolate over cooldown time
+        // TODO: Option to loop for x seconds
+        // TODO: Option to loop indefinitely
+        // TODO: Option to loop until triggered again
 
         [Tooltip("Give the reaction a unique name to identify it.")]
         public string reactionName;
