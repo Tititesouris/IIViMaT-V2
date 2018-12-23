@@ -1,4 +1,5 @@
-﻿using Interaction.Actors;
+﻿using System;
+using Interaction.Actors;
 
 namespace Interaction.Actions
 {

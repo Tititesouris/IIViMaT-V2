@@ -9,13 +9,6 @@ namespace Interaction.Reactions
         public Vector3 newPosition;
 
         [Tooltip(
-            "If enabled, the new position will be a random position centered around [New Position] within a range of [Random Range].")]
-        public bool randomNewPosition;
-
-        [Tooltip("The new position will be randomized within this range.")]
-        public Vector3 randomRange = Vector3.one;
-
-        [Tooltip(
             "If enabled, the new position will be relative to the current position. If disabled, the new position will be relative to world coordinates.")]
         public bool relativeNewPosition;
 
@@ -26,6 +19,13 @@ namespace Interaction.Reactions
         [Tooltip(
             "If enabled, the new position will be relative to the heading of the actor that triggered the action. If disabled, the new position will be relative to world orientation.")]
         public bool relativeToActorHeading;
+
+        [Tooltip(
+            "If enabled, the new position will be a random position centered around [New Position] within a range of [Random Range].")]
+        public bool randomNewPosition;
+
+        [Tooltip("The new position will be randomized within this range.")]
+        public Vector3 randomRange = Vector3.one;
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {

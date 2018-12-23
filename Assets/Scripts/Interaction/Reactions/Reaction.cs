@@ -7,17 +7,6 @@ namespace Interaction.Reactions
 {
     public abstract class Reaction : MonoBehaviour
     {
-        protected static Random Rnd;
-
-        private float _lastReaction;
-
-        private IEnumerator _reactAfterDelayCoroutine;
-
-        [Tooltip("The amount of time in seconds to wait before reacting again.")]
-        public float cooldown;
-
-        [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
-        public float delay;
         // TODO: Random cooldown
         // TODO: Random delay
 
@@ -28,6 +17,18 @@ namespace Interaction.Reactions
 
         [Tooltip("Give the reaction a unique name to identify it.")]
         public string reactionName;
+
+        [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
+        public float delay;
+
+        [Tooltip("The amount of time in seconds to wait before reacting again.")]
+        public float cooldown;
+
+        protected static Random Rnd;
+
+        private float _lastReaction;
+
+        private IEnumerator _reactAfterDelayCoroutine;
 
         private void Start()
         {

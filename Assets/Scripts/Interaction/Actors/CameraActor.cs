@@ -6,32 +6,32 @@ namespace Interaction.Actors
 {
     public class CameraActor : Actor
     {
-        private static int _interactableLayerMask;
-
-        [Tooltip("If enabled, the gaze will go through objects. If disabled, it will stop when hitting an object.")]
-        public bool goThroughObjects = true;
-
-        [Tooltip("The actor will not trigger gaze actions on object that are further away.")]
-        public float maxGazeRange = 50f;
+        [Header("Proximity")] [Tooltip("If enabled, the actor will trigger proximity actions.")]
+        public bool triggerProximityActions = true;
 
         [Tooltip("The actor will not trigger proximity actions on object that are further away.")]
         public float maxProximityRange = 10f;
-
-        [Tooltip("If set to 1, the gaze will only trigger reactions on the first object with reactions in its path." +
-                 "If set to another number, the gaze will trigger reactions on up to that number of object with reactions in its path.")]
-        [Range(1, 10)]
-        public int nbObjectsToTrigger = 1;
-
-        [Tooltip("If enabled, the actor will trigger gaze actions in 360 spheres.")]
-        public bool triggerGaze360Actions = true;
 
 
         [Header("Gaze")] [Tooltip("If enabled, the actor will trigger gaze actions.")]
         public bool triggerGazeActions = true;
 
-        [Header("Proximity")] [Tooltip("If enabled, the actor will trigger proximity actions.")]
-        public bool triggerProximityActions = true;
+        [Tooltip("If enabled, the actor will trigger gaze actions in 360 spheres.")]
+        public bool triggerGaze360Actions = true;
 
+        [Tooltip("The actor will not trigger gaze actions on object that are further away.")]
+        public float maxGazeRange = 50f;
+
+        [Tooltip("If enabled, the gaze will go through objects. If disabled, it will stop when hitting an object.")]
+        public bool goThroughObjects = true;
+
+        [Tooltip("If set to 1, the gaze will only trigger reactions on the first object with reactions in its path." +
+                 "If set to another number, the gaze will trigger reactions on up to that number of object with reactions in its path.")]
+        [Range(1, 10)]
+        public int nbObjectsToTrigger = 1;
+        
+        private static int _interactableLayerMask;
+        
         private void Awake()
         {
             _interactableLayerMask = 1 << LayerMask.NameToLayer("Interactable");

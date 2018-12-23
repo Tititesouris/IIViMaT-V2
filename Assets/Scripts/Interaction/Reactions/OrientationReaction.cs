@@ -9,15 +9,15 @@ namespace Interaction.Reactions
         public Vector3 newOrientation;
 
         [Tooltip(
+            "If enabled, the new orientation will be relative to the current orientation. If disabled, the new orientation will be relative to the world orientation.")]
+        public bool relativeNewOrientation;
+
+        [Tooltip(
             "If enabled, the new orientation will be a random orientation centered around [New Orientation] within a range of [Random Range].")]
         public bool randomNewOrientation;
 
         [Tooltip("The new orientation will be randomized within this range.")]
         public Vector3 randomRange = Vector3.one;
-
-        [Tooltip(
-            "If enabled, the new orientation will be relative to the current orientation. If disabled, the new orientation will be relative to the world orientation.")]
-        public bool relativeNewOrientation;
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {

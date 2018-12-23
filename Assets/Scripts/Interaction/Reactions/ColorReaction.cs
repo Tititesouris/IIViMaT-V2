@@ -5,22 +5,22 @@ namespace Interaction.Reactions
 {
     public class ColorReaction : Reaction
     {
-        private Renderer _renderer;
-
-        [Tooltip("The new color will be randomized up to this color.")]
-        public Color maxRandomColor;
-
         [Tooltip("The color the object will have after reacting.")]
         public Color newColor;
-
-        [Tooltip(
-            "If enabled, the new color will be a random color between [New Color] and [Max Random Color].")]
-        public bool randomNewColor;
 
         [Tooltip(
             "If enabled, the new color will be relative to the current color. If disabled, the new color will be relative to black.")]
         public bool relativeNewColor;
 
+        [Tooltip(
+            "If enabled, the new color will be a random color between [New Color] and [Max Random Color].")]
+        public bool randomNewColor;
+
+        [Tooltip("The new color will be randomized up to this color.")]
+        public Color maxRandomColor;
+
+        private Renderer _renderer;
+        
         private void Start()
         {
             _renderer = GetComponent<Renderer>();

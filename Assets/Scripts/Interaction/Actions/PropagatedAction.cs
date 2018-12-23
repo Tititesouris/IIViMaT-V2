@@ -5,12 +5,12 @@ namespace Interaction.Actions
 {
     public class PropagatedAction : Action
     {
-        [Tooltip("The reactions will be triggered if the propagator is within this distance.")]
-        public float triggerDistance = 1f;
-
         [Tooltip(
             "If enabled, the reactions will only be triggered if the propagator is within a distance of [Trigger Distance].")]
         public bool triggerOnlyInRange;
+        
+        [Tooltip("The reactions will be triggered if the propagator is within this distance.")]
+        public float triggerDistance = 1f;
 
         public bool Trigger(Actor actor, RaycastHit? hit, GameObject propagator)
         {
