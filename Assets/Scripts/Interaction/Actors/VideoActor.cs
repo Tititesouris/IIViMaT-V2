@@ -52,7 +52,6 @@ namespace Interaction.Actors
             _playing = _videoPlayer.isPlaying;
             if (triggerVideoTimeActions && _lastTime + timeStep <= _videoPlayer.time) // TODO: Reset lastTime to 0 on video loop
             {
-                Debug.Log(_videoPlayer.time);
                 VideoTimeTriggers(interactables);
                 _lastTime = timeStep * (int)(_videoPlayer.time / timeStep);
             }

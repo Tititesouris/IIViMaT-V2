@@ -1,5 +1,6 @@
 ﻿using Interaction.Actors;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Interaction.Reactions
 {
@@ -13,12 +14,16 @@ namespace Interaction.Reactions
         public bool relativeNewPosition;
 
         [Tooltip(
-            "If enabled, the new position will be relative to the position of the actor that triggered the action. If disabled, the new position will be relative to world coordinates.")]
+            "If enabled, the new position will be relative to the position of the actor that triggered the action.")]
         public bool relativeToActor;
 
         [Tooltip(
+            "If enabled, the new position will be relative to the position of the active camera.")]
+        public bool relativeToCamera;
+
+        [Tooltip(
             "If enabled, the new position will be relative to the heading of the actor that triggered the action. If disabled, the new position will be relative to world orientation.")]
-        public bool relativeToActorHeading;
+        public bool relativeHeading;
 
         [Tooltip(
             "If enabled, the new position will be a random position centered around [New Position] within a range of [Random Range].")]
@@ -30,12 +35,13 @@ namespace Interaction.Reactions
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             var position = transform.position;
-            if (relativeToActor)
+            if (relativeToActor || relativeToCamera)
             {
-                position = actor.transform.position + newPosition;
-                if (relativeToActorHeading)
-                    position = Quaternion.Euler(actor.transform.eulerAngles) * (position - actor.transform.position) +
-                               actor.transform.position;
+                var reference = relativeToActor ? actor.transform : Camera.current.transform;
+                position = reference.position + newPosition;
+                if (relativeHeading)
+                    position = Quaternion.Euler(reference.eulerAngles) * (position - reference.position) +
+                               reference.position;
             }
             else if (relativeNewPosition)
             {

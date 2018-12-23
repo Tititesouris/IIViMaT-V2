@@ -13,6 +13,14 @@ namespace Interaction.Reactions
         public bool relativeNewOrientation;
 
         [Tooltip(
+            "If enabled, the new orientation will be relative to the orientation of the actor that triggered the action.")]
+        public bool relativeToActor;
+
+        [Tooltip(
+            "If enabled, the new orientation will be relative to the orientation of the active camera.")]
+        public bool relativeToCamera;
+
+        [Tooltip(
             "If enabled, the new orientation will be a random orientation centered around [New Orientation] within a range of [Random Range].")]
         public bool randomNewOrientation;
 
@@ -21,20 +29,25 @@ namespace Interaction.Reactions
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
-            var orientation = transform.localRotation.eulerAngles;
-            if (relativeNewOrientation)
-                orientation += newOrientation; // TODO Fix bug always positive angle
+            var orientation = transform.rotation;
+
+            if (relativeToActor || relativeToCamera)
+            {
+                var reference = relativeToActor ? actor.transform : Camera.current.transform;
+                orientation = reference.rotation * Quaternion.Euler(newOrientation);
+            }
+            else if (relativeNewOrientation)
+                orientation *= Quaternion.Euler(newOrientation);
             else
-                orientation = newOrientation;
+                orientation = Quaternion.Euler(newOrientation);
 
             if (randomNewOrientation)
-                orientation += new Vector3(
+                orientation *= Quaternion.Euler(new Vector3(
                     Random.Range(-randomRange.x, randomRange.x),
                     Random.Range(-randomRange.y, randomRange.y),
                     Random.Range(-randomRange.z, randomRange.z)
-                );
-
-            transform.localRotation = Quaternion.Euler(orientation);
+                ));
+            transform.rotation = orientation;
             return true;
         }
     }
