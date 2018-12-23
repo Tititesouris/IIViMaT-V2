@@ -232,13 +232,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fede765de184ca142a5c925e560cadea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goThroughObjects: 1
-  maxGazeRange: 50
-  maxProximityRange: 10
-  nbObjectsToTrigger: 1
-  triggerGaze360Actions: 1
-  triggerGazeActions: 1
   triggerProximityActions: 1
+  maxProximityRange: 10
+  triggerGazeActions: 1
+  triggerGaze360Actions: 1
+  maxGazeRange: 50
+  goThroughObjects: 1
+  nbObjectsToTrigger: 10
 --- !u!1 &1595473894
 GameObject:
   m_ObjectHideFlags: 0

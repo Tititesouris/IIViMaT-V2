@@ -7,6 +7,19 @@ namespace Interaction.Actors
 {
     public class VideoActor : Actor
     {
+        private AudioSource _audioPlayer;
+
+        private double _lastTime;
+
+        private bool _playing;
+
+        private VideoPlayer _videoPlayer;
+
+        [Tooltip("The time in seconds between every VideoTime action.")]
+        public float timeStep = 1f;
+
+        [Tooltip("If enabled the actor will trigger PauseVideo action.")]
+        public bool triggerPauseVideoActions = true;
 
         // TODO: Option Trigger every x seconds
 
@@ -15,22 +28,8 @@ namespace Interaction.Actors
         [Tooltip("If enabled the actor will trigger PlayVideo action.")]
         public bool triggerPlayVideoActions = true;
 
-        [Tooltip("If enabled the actor will trigger PauseVideo action.")]
-        public bool triggerPauseVideoActions = true;
-
         [Tooltip("If enabled the actor will trigger VideoTime action.")]
         public bool triggerVideoTimeActions = true;
-
-        [Tooltip("The time in seconds between every VideoTime action.")]
-        public float timeStep = 1f;
-        
-        private VideoPlayer _videoPlayer;
-        
-        private AudioSource _audioPlayer;
-
-        private double _lastTime;
-
-        private bool _playing;
 
         private void Start()
         {
@@ -50,11 +49,12 @@ namespace Interaction.Actors
             }
 
             _playing = _videoPlayer.isPlaying;
-            if (_lastTime + timeStep <= _videoPlayer.time)
+            if (triggerVideoTimeActions && _lastTime + timeStep <= _videoPlayer.time
+            ) // TODO: Reset lastTime to 0 on video loop
             {
                 Debug.Log(_videoPlayer.time);
                 VideoTimeTriggers(interactables);
-                _lastTime += timeStep;
+                _lastTime = timeStep * (int) (_videoPlayer.time / timeStep);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Interaction.Actors
                     var videoTimeAction = action as VideoTimeAction;
                     if (videoTimeAction != null)
                     {
-                        videoTimeAction.Trigger(this);
+                        videoTimeAction.Trigger(this, _videoPlayer.time);
                         triggered = true;
                     }
                 }
