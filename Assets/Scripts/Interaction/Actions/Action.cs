@@ -8,10 +8,8 @@ namespace Interaction.Actions
 {
     public abstract class Action : MonoBehaviour
     {
-        [Header("Reactions")] [Tooltip("If enabled, allows you to specify which reactions to trigger.")]
         public bool specifyReactions;
 
-        [Tooltip("List all the reactions that will be triggered.")]
         public List<string> reactionNames = new List<string>();
 
         // TODO: Give option to only trigger reactions with an AND or a XOR of actions
