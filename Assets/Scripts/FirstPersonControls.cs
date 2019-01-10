@@ -10,6 +10,8 @@ public class FirstPersonControls : MonoBehaviour
 
     private bool sightHeadingMode;
 
+    public bool fixedView;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -25,7 +27,9 @@ public class FirstPersonControls : MonoBehaviour
         {
             ToggleHeadingMode();
             Turn();
-            Move();
+            if (!fixedView) {
+                Move();
+            }
         }
     }
 
