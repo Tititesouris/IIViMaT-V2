@@ -16,7 +16,7 @@ namespace Interaction.Actions
         {
             if (!triggerOnlyInRange || (propagator.transform.position - transform.position).magnitude < triggerDistance)
             {
-                foreach (var reaction in Reactions) reaction.ReactToAction(actor, hit);
+                foreach (var reaction in Reactions) reaction.Trigger(actor, hit);
 
                 return true;
             }

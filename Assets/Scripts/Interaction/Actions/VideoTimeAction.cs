@@ -42,7 +42,7 @@ namespace Interaction.Actions
 
         private bool TriggerTime(Actor actor)
         {
-            foreach (var reaction in Reactions) reaction.ReactToAction(actor, null);
+            foreach (var reaction in Reactions) reaction.Trigger(actor, null);
             return true;
         }
     }

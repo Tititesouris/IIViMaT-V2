@@ -31,15 +31,12 @@ namespace Interaction.Actors
         private double _lastTime;
 
         private bool _playing;
+        
+        private List<Action> _triggeredActions;
 
-        private void Start()
+        protected override List<Action> Act()
         {
-            _videoPlayer = GetComponent<VideoPlayer>();
-            _audioPlayer = GetComponent<AudioSource>();
-        }
-
-        private void Update()
-        {
+            _triggeredActions = new List<Action>();
             var interactables = GameObject.FindGameObjectsWithTag("Interactable");
             if (_playing != _videoPlayer.isPlaying)
             {
@@ -55,6 +52,14 @@ namespace Interaction.Actors
                 VideoTimeTriggers(interactables);
                 _lastTime = timeStep * (int)(_videoPlayer.time / timeStep);
             }
+
+            return _triggeredActions;
+        }
+
+        private void Start()
+        {
+            _videoPlayer = GetComponent<VideoPlayer>();
+            _audioPlayer = GetComponent<AudioSource>();
         }
 
         private bool PlayVideoTriggers(IEnumerable<GameObject> interactables)
@@ -68,6 +73,8 @@ namespace Interaction.Actors
                     var playAction = action as PlayVideoAction;
                     if (playAction != null)
                     {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
                         playAction.Trigger(this);
                         triggered = true;
                     }
@@ -88,6 +95,8 @@ namespace Interaction.Actors
                     var pauseAction = action as PauseVideoAction;
                     if (pauseAction != null)
                     {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
                         pauseAction.Trigger(this);
                         triggered = true;
                     }
@@ -108,6 +117,8 @@ namespace Interaction.Actors
                     var videoTimeAction = action as VideoTimeAction;
                     if (videoTimeAction != null)
                     {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
                         videoTimeAction.Trigger(this, _videoPlayer.time);
                         triggered = true;
                     }

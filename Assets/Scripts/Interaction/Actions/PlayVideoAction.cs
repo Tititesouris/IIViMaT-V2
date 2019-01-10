@@ -7,7 +7,7 @@ namespace Interaction.Actions
     {
         public bool Trigger(Actor actor)
         {
-            foreach (var reaction in Reactions) reaction.ReactToAction(actor, null);
+            foreach (var reaction in Reactions) reaction.Trigger(actor, null);
 
             return true;
         }

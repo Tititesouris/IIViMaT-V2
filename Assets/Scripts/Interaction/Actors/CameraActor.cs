@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Interaction.Actions;
 using UnityEngine;
 
@@ -24,29 +25,33 @@ namespace Interaction.Actors
 
         [Tooltip("If enabled, the gaze will go through objects. If disabled, it will stop when hitting an object.")]
         public bool goThroughObjects = true;
-        
+
         // TODO: Option: Go through 360 spheres
 
         [Tooltip("If set to 1, the gaze will only trigger reactions on the first object with reactions in its path." +
                  "If set to another number, the gaze will trigger reactions on up to that number of object with reactions in its path.")]
         [Range(1, 10)]
         public int nbObjectsToTrigger = 1;
-        
+
         private static int _interactableLayerMask;
-        
+
+        private List<Action> _triggeredActions;
+
         private void Awake()
         {
             _interactableLayerMask = 1 << LayerMask.NameToLayer("Interactable");
         }
 
-        private void Update()
+        protected override List<Action> Act()
         {
+            _triggeredActions = new List<Action>();
             if (triggerProximityActions)
                 ProximityTriggers();
             if (triggerGazeActions)
                 GazeTriggers();
             if (triggerGaze360Actions)
                 Gaze360Triggers();
+            return _triggeredActions;
         }
 
         private bool ProximityTriggers()
@@ -59,7 +64,13 @@ namespace Interaction.Actors
                 foreach (var action in actions)
                 {
                     var proximityAction = action as ProximityAction;
-                    if (proximityAction != null) proximityAction.Trigger(this);
+                    if (proximityAction != null)
+                    {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
+
+                        proximityAction.Trigger(this);
+                    }
                 }
             }
 
@@ -82,6 +93,9 @@ namespace Interaction.Actors
                         var gazeAction = action as GazeAction;
                         if (gazeAction != null)
                         {
+                            if (!_triggeredActions.Contains(action))
+                                _triggeredActions.Add(action);
+
                             gazeAction.Trigger(this, hit);
                             nbTriggered++;
                         }
@@ -113,6 +127,8 @@ namespace Interaction.Actors
                     /*var gazeAction = action as GazeAction;
                     if (gazeAction != null)
                     {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
                         gazeAction.Trigger(this, hit);
                     }*/
                 }

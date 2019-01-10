@@ -7,7 +7,7 @@ namespace Interaction.Actions
     {
         public bool Trigger(Actor actor, RaycastHit hit)
         {
-            foreach (var reaction in Reactions) reaction.ReactToAction(actor, hit);
+            foreach (var reaction in Reactions) reaction.Trigger(actor, hit);
 
             return true;
         }

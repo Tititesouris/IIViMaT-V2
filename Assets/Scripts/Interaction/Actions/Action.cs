@@ -36,5 +36,10 @@ namespace Interaction.Actions
             else
                 Reactions = new List<Reaction>(reactions);
         }
+
+        public void StopTrigger()
+        {
+            foreach (var reaction in Reactions) reaction.StopTrigger();
+        }
     }
 }
