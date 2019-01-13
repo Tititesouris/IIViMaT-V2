@@ -7,6 +7,9 @@ namespace Interaction.Actions
     {
         public bool Trigger(Actor actor, RaycastHit hit)
         {
+            if (!isActiveAndEnabled)
+                return false;
+            
             foreach (var reaction in Reactions) reaction.Trigger(actor, hit);
 
             return true;

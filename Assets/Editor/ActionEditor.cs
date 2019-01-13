@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Interaction.Actions;
+﻿using Interaction.Actions;
 using UnityEditor;
 using UnityEngine;
 

@@ -7,12 +7,16 @@ namespace Interaction.Reactions
 {
     public abstract class Reaction : MonoBehaviour
     {
+        public enum RepeatOptions
+        {
+            No,
+            Indefinitely,
+            Fixed
+        }
         // TODO: Random cooldown
         // TODO: Random delay
 
         // TODO: Option to interpolate over cooldown time
-        // TODO: Option to loop for x seconds
-        // TODO: Option to loop indefinitely
         // TODO: Option to loop until triggered again
 
         [Tooltip("Give the reaction a unique name to identify it.")]
@@ -28,6 +32,10 @@ namespace Interaction.Reactions
 
         public float cooldown;
 
+        public RepeatOptions repeat = RepeatOptions.No;
+
+        public int nbRepeat = 1;
+
         protected static Random Rnd;
 
         private bool _startedTrigger;
@@ -36,11 +44,19 @@ namespace Interaction.Reactions
 
         private float _lastTrigger;
 
-        private IEnumerator _triggerAfterTimeCoroutine;
+        private bool _repeating;
+
+        private int _nbRepeated;
+
+        private IEnumerator _startTriggerCoroutine;
 
         private IEnumerator _reactAfterDelayCoroutine;
 
-        private void Start()
+        protected void Awake()
+        {
+        }
+
+        protected void Start()
         {
             if (Rnd == null)
                 Rnd = new Random();
@@ -50,24 +66,53 @@ namespace Interaction.Reactions
 
         public bool Trigger(Actor actor, RaycastHit? hit)
         {
+            // Don't trigger if component is disabled
             if (!isActiveAndEnabled)
                 return false;
+            
+            // Don't trigger if already in the process of triggering
+            if (_startedTrigger)
+                return false;
 
+            // Don't trigger if the reaction is currently repeating
+            if (_repeating)
+                return false;
+
+            // Don't trigger if only triggering once and already triggered
             if (triggerOnlyOnce && (_startedTrigger || _triggered))
                 return false;
 
-            _startedTrigger = true;
-
+            // Don't trigger if not enough time has passed since last trigger
             if (Time.time < _lastTrigger + cooldown)
                 return false;
+            _nbRepeated = 0;
 
-            _lastTrigger = Time.time;
-
+            // If triggering takes time
             if (triggerTime > 0)
             {
-                _triggerAfterTimeCoroutine = TriggerAfterTime(actor, hit, triggerTime);
-                StartCoroutine(_triggerAfterTimeCoroutine);
+                _startTriggerCoroutine = StartTrigger(actor, hit, triggerTime);
+                StartCoroutine(_startTriggerCoroutine);
                 return false;
+            }
+            
+            return Triggered(actor, hit);
+        }
+
+        private bool Triggered(Actor actor, RaycastHit? hit)
+        {
+            _triggered = true;
+            _startedTrigger = false;
+            _lastTrigger = Time.time;
+            
+            if (repeat == RepeatOptions.Indefinitely || repeat == RepeatOptions.Fixed && _nbRepeated < nbRepeat)
+            {
+                _repeating = true;
+                _nbRepeated++;
+                StartCoroutine(StartTrigger(actor, hit, cooldown));
+            }
+            else
+            {
+                _repeating = false;
             }
 
             if (delay > 0)
@@ -80,27 +125,21 @@ namespace Interaction.Reactions
             return React(actor, hit);
         }
 
+        private IEnumerator StartTrigger(Actor actor, RaycastHit? hit, float time)
+        {
+            _startedTrigger = true;
+            yield return new WaitForSeconds(time);
+            Triggered(actor, hit);
+        }
+
         public void StopTrigger()
         {
-            if (_triggerAfterTimeCoroutine != null)
+            if (_startTriggerCoroutine != null)
             {
-                StopCoroutine(_triggerAfterTimeCoroutine);
+                StopCoroutine(_startTriggerCoroutine);
                 _startedTrigger = false;
                 _lastTrigger = 0;
             }
-        }
-
-        private IEnumerator TriggerAfterTime(Actor actor, RaycastHit? hit, float time)
-        {
-            yield return new WaitForSeconds(time);
-            _triggered = true;
-            if (delay > 0)
-            {
-                _reactAfterDelayCoroutine = ReactAfterDelay(actor, hit, delay);
-                StartCoroutine(_reactAfterDelayCoroutine);
-            }
-
-            React(actor, hit);
         }
 
         private IEnumerator ReactAfterDelay(Actor actor, RaycastHit? hit, float time)

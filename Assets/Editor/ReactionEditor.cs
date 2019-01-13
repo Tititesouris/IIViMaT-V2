@@ -1,32 +1,29 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Interaction.Actions;
 using Interaction.Reactions;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Reaction), true)]
-public class ReactionEditor : Editor
+public class ReactionEditor : IivimatEditor
 {
-    private static readonly string[] ExcludedProperties =
-        {"m_Script", "reactionName", "triggerTime", "delay", "triggerOnlyOnce", "cooldown"};
-
-
     private SerializedProperty _reactionName;
+
     private SerializedProperty _triggerTime;
+
     private SerializedProperty _delay;
 
-    private void OnEnable()
+    protected override void LoadGui()
     {
         _reactionName = serializedObject.FindProperty("reactionName");
         _triggerTime = serializedObject.FindProperty("triggerTime");
         _delay = serializedObject.FindProperty("delay");
     }
 
-    public override void OnInspectorGUI()
+    protected override void DrawGui()
     {
-        serializedObject.Update();
         var reaction = (Reaction) target;
-
         EditorGUILayout.Space();
 
         var actions = Selection.activeGameObject.GetComponents<Action>();
@@ -44,15 +41,31 @@ public class ReactionEditor : Editor
 
         if (!reaction.triggerOnlyOnce)
         {
+            EditorGUI.indentLevel++;
             var cooldownLabel = new GUIContent("Cooldown",
                 "The minimum amount of time in seconds between two triggers."
             );
             reaction.cooldown = EditorGUILayout.FloatField(cooldownLabel, reaction.cooldown);
+            
+            var repeatLabel = new GUIContent("Repeat",
+                "Select to repeat automatically, without an action trigger, after the cooldown."
+            );
+            reaction.repeat = (Reaction.RepeatOptions) EditorGUILayout.EnumPopup(repeatLabel, reaction.repeat);
+            
+            if (reaction.repeat == Reaction.RepeatOptions.Fixed)
+            {
+                EditorGUI.indentLevel++;
+                var relativeHeadingLabel = new GUIContent("Number of repeats",
+                    "The number of times the reaction will repeat.");
+                reaction.nbRepeat = EditorGUILayout.IntField(relativeHeadingLabel, reaction.nbRepeat);
+                EditorGUI.indentLevel--;
+            }
+            EditorGUI.indentLevel--;
         }
+    }
 
-        DrawPropertiesExcluding(serializedObject, ExcludedProperties);
-
-        serializedObject.ApplyModifiedProperties();
-        EditorApplication.update.Invoke();
+    protected override IEnumerable<string> GetIgnoredFields()
+    {
+        return new [] {"reactionName", "triggerTime", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
     }
 }

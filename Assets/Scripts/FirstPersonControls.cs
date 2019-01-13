@@ -2,34 +2,31 @@
 
 public class FirstPersonControls : MonoBehaviour
 {
-    private bool focused;
 
     public float motionSpeed;
 
     public float rotationSpeed;
+    
+    private bool _focused;
 
-    private bool sightHeadingMode;
-
-    public bool fixedView;
+    private bool _sightHeadingMode;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        sightHeadingMode = false;
-        focused = true;
+        _sightHeadingMode = false;
+        _focused = true;
     }
 
     private void Update()
     {
         ToggleFocus();
 
-        if (focused)
+        if (_focused)
         {
             ToggleHeadingMode();
             Turn();
-            if (!fixedView) {
-                Move();
-            }
+            Move();
         }
     }
 
@@ -37,15 +34,15 @@ public class FirstPersonControls : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            focused = !focused;
-            Cursor.lockState = focused ? CursorLockMode.Locked : CursorLockMode.None;
+            _focused = !_focused;
+            Cursor.lockState = _focused ? CursorLockMode.Locked : CursorLockMode.None;
         }
     }
 
     private void ToggleHeadingMode()
     {
         if (Input.GetButtonDown("Fire2"))
-            sightHeadingMode = !sightHeadingMode;
+            _sightHeadingMode = !_sightHeadingMode;
     }
 
     private void Turn()
@@ -66,7 +63,7 @@ public class FirstPersonControls : MonoBehaviour
         var translation = Vector3.zero;
         translation.x = Input.GetAxis("Horizontal");
         translation.z = Input.GetAxis("Vertical");
-        if (sightHeadingMode)
+        if (_sightHeadingMode)
             translation = gameObject.transform.TransformDirection(translation);
         else
             translation = Quaternion.Euler(0, gameObject.transform.eulerAngles.y, 0) * translation;

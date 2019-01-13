@@ -7,7 +7,7 @@ namespace Interaction.Actions
     public class VideoTimeAction : Action
     {
         [Tooltip("The time in seconds after the start of the video to wait before reacting.")]
-        public float time = 10f;
+        public float startTime = 10f;
 
         [Tooltip("If enabled, react every [Interval] seconds of the video after [Time] seconds have passed.")]
         public bool repeat;
@@ -17,21 +17,24 @@ namespace Interaction.Actions
 
         private bool _triggered;
         
-        private double _lastInterval; // TODO: Bug, doesn't reset when video loops
+        private double _lastInterval;
 
         public bool Trigger(Actor actor, double videoTime)
         {
+            if (!isActiveAndEnabled)
+                return false;
+            
             if (_triggered)
             {
-                if (repeat && time + _lastInterval + interval <= videoTime)
+                if (repeat && startTime + _lastInterval + interval <= videoTime)
                 {
-                    _lastInterval = interval * (int)((videoTime - time) / interval);
+                    _lastInterval = interval * (int)((videoTime - startTime) / interval);
                     return TriggerTime(actor);
                 }
             }
             else
             {
-                if (videoTime >= time)
+                if (videoTime >= startTime)
                 {
                     _triggered = true;
                     return TriggerTime(actor);

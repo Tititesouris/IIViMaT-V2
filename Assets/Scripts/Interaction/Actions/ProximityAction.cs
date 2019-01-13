@@ -15,6 +15,9 @@ namespace Interaction.Actions
 
         public bool Trigger(Actor actor)
         {
+            if (!isActiveAndEnabled)
+                return false;
+            
             if (!triggerOnlyInRange || (actor.transform.position - transform.position).magnitude < triggerDistance)
             {
                 foreach (var reaction in Reactions) reaction.Trigger(actor, null);

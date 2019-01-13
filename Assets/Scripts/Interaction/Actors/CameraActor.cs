@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Interaction.Actions;
+using UnityEditor;
 using UnityEngine;
 
 namespace Interaction.Actors
 {
     public class CameraActor : Actor
     {
+        // TODO: Option: Go through 360 spheres
+        
         [Header("Proximity")] [Tooltip("If enabled, the actor will trigger proximity actions.")]
         public bool triggerProximityActions = true;
 
@@ -26,8 +29,6 @@ namespace Interaction.Actors
         [Tooltip("If enabled, the gaze will go through objects. If disabled, it will stop when hitting an object.")]
         public bool goThroughObjects = true;
 
-        // TODO: Option: Go through 360 spheres
-
         [Tooltip("If set to 1, the gaze will only trigger reactions on the first object with reactions in its path." +
                  "If set to another number, the gaze will trigger reactions on up to that number of object with reactions in its path.")]
         [Range(1, 10)]
@@ -37,9 +38,21 @@ namespace Interaction.Actors
 
         private List<Action> _triggeredActions;
 
-        private void Awake()
+        protected new void Awake()
         {
+            base.Awake();
+            if (GetComponent<Camera>() == null)
+            {
+                EditorUtility.DisplayDialog("Error", "Camera Actor can only be placed on a camera:\n" +
+                                                     GetType().Name + " placed on " + name, "Ok");
+                EditorApplication.isPlaying = false;
+            }
             _interactableLayerMask = 1 << LayerMask.NameToLayer("Interactable");
+        }
+
+        private new void Start()
+        {
+            base.Start();
         }
 
         protected override List<Action> Act()
@@ -113,7 +126,8 @@ namespace Interaction.Actors
 
         private bool Gaze360Triggers()
         {
-            // Rays don't hit the object they come from inside of. Solution:
+            // TODO: Gaze 360
+            // Rays don't hit the object they come from inside of it. Solution:
             // Make ray come from outside towards actor. Take the last hit object, it will be the 360 sphere.
             var hits = Physics.RaycastAll(transform.position + transform.forward * maxGazeRange, -transform.forward,
                 maxGazeRange, _interactableLayerMask);

@@ -10,12 +10,17 @@ namespace Interaction.Actors
 
         protected abstract List<Action> Act();
 
-        private void Start()
+        protected void Awake()
+        {
+            
+        }
+
+        protected void Start()
         {
             _lastTriggeredActions = new List<Action>();
         }
 
-        private void Update()
+        protected void Update()
         {
             var triggeredActions = Act();
             foreach (var action in _lastTriggeredActions)

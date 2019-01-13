@@ -7,6 +7,9 @@ namespace Interaction.Actions
     {
         public bool Trigger(Actor actor)
         {
+            if (!isActiveAndEnabled)
+                return false;
+            
             foreach (var reaction in Reactions) reaction.Trigger(actor, null);
 
             return true;
