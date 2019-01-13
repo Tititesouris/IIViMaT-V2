@@ -5,6 +5,9 @@ namespace Interaction.Reactions.Video
 {
 	public class PlayVideoReaction : VideoReaction
 	{
+		[Tooltip("The starting time in the video.")]
+		public float startTime;
+		
 		[Tooltip("If enabled, the video will loop.")]
 		public bool loop;
 
@@ -12,6 +15,7 @@ namespace Interaction.Reactions.Video
 		{
 			VideoPlayer.isLooping = loop;
 			VideoPlayer.Play();
+			VideoPlayer.time = startTime;
 			return true;
 		}
 	}

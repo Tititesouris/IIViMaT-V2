@@ -80,7 +80,6 @@ namespace Interaction.Actors
             _playing = _videoPlayer.isPlaying;
             if (_playing && triggerVideoTimeActions && _nextTime <= _videoPlayer.time)
             {
-                Debug.Log("Trigger " + _nextTime + "   " + _videoPlayer.clip.length + "   " + _videoPlayer.time);
                 VideoTimeTriggers(interactables);
                 _nextTime = timeStep * (int) (1 + _videoPlayer.time / timeStep);
             }
