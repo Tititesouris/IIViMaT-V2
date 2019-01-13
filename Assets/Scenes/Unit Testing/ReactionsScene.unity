@@ -836,3 +836,41 @@ MonoBehaviour:
   maxGazeRange: 50
   goThroughObjects: 1
   nbObjectsToTrigger: 1
+--- !u!1 &2017225895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1442812234906970, guid: fe09186c92d4a204f931036524696104,
+    type: 2}
+  m_PrefabInternal: {fileID: 1478843342}
+--- !u!114 &2017225903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2017225895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d198ce269926a8e45bd204bed28c3354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactionName: 
+  triggerTime: 1
+  delay: 0
+  triggerOnlyOnce: 0
+  cooldown: 0
+  repeat: 0
+  nbRepeat: 1
+  startTime: 30
+  loop: 0
+--- !u!114 &2017225904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2017225895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21a74106c8f6e1459a521fa0ea390f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specifyReactions: 0
+  reactionNames: []
