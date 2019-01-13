@@ -12,6 +12,8 @@ namespace Interaction.Actions
         [Tooltip("The reactions will be triggered if the propagator is within this distance.")]
         public float triggerDistance = 1f;
 
+        public string actionName;
+
         public bool Trigger(Actor actor, RaycastHit? hit, GameObject propagator)
         {
             if (!isActiveAndEnabled)

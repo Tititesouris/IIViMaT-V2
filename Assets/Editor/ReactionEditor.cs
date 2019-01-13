@@ -27,7 +27,7 @@ public class ReactionEditor : IivimatEditor
         EditorGUILayout.Space();
 
         var actions = Selection.activeGameObject.GetComponentsInParent<Action>();
-        if (reaction.reactionName.Length == 0 && !actions.Any(action => action.specifyReactions))
+        if (!actions.Any(action => action.specifyReactions) && reaction.reactionName != null && reaction.reactionName.Length == 0)
             GUI.enabled = false;
         EditorGUILayout.PropertyField(_reactionName);
         GUI.enabled = true;

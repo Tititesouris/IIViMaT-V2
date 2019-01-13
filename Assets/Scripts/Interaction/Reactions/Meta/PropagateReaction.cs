@@ -23,6 +23,10 @@ namespace Interaction.Reactions.Meta
         [Tooltip("If enabled, the targets triggered will be removed from the list and thus cannot be triggered again.")]
         public bool removeTargetOnPropagation;
 
+        public bool specifyActions;
+
+        public string[] actionNames;
+
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             var selectedTargets = (randomPropagation ? targets.OrderBy(x => Rnd.Next()).ToArray() : targets)
@@ -33,7 +37,9 @@ namespace Interaction.Reactions.Meta
                 foreach (var action in actions)
                 {
                     var propagatedAction = action as PropagatedAction;
-                    if (propagatedAction != null) propagatedAction.Trigger(actor, hit, gameObject);
+                    if (propagatedAction != null)
+                        if (!specifyActions || actionNames.Contains(propagatedAction.actionName))
+                            propagatedAction.Trigger(actor, hit, gameObject);
                 }
             }
 
