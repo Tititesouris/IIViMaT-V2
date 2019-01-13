@@ -15,7 +15,6 @@ namespace Interaction.Reactions
         }
         // TODO: Random cooldown
         // TODO: Random delay
-
         // TODO: Option to interpolate over cooldown time
         // TODO: Option to loop until triggered again
 
@@ -69,7 +68,7 @@ namespace Interaction.Reactions
             // Don't trigger if component is disabled
             if (!isActiveAndEnabled)
                 return false;
-            
+
             // Don't trigger if already in the process of triggering
             if (_startedTrigger)
                 return false;
@@ -94,7 +93,7 @@ namespace Interaction.Reactions
                 StartCoroutine(_startTriggerCoroutine);
                 return false;
             }
-            
+
             return Triggered(actor, hit);
         }
 
@@ -103,7 +102,7 @@ namespace Interaction.Reactions
             _triggered = true;
             _startedTrigger = false;
             _lastTrigger = Time.time;
-            
+
             if (repeat == RepeatOptions.Indefinitely || repeat == RepeatOptions.Fixed && _nbRepeated < nbRepeat)
             {
                 _repeating = true;

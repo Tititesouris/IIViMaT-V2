@@ -1,25 +1,30 @@
-﻿using Interaction.Actions;
+﻿using System.Collections.Generic;
+using Interaction.Actions;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Action), true)]
-public class ActionEditor : Editor
+public class ActionEditor : IivimatEditor
 {
-    private static readonly string[] ExcludedProperties = {"m_Script", "specifyReactions", "reactionNames"};
+    private SerializedProperty _groupTrigger;
 
     private SerializedProperty _reactionNames;
 
-    private void OnEnable()
+    protected override void LoadGui()
     {
+        _groupTrigger = serializedObject.FindProperty("groupTrigger");
         _reactionNames = serializedObject.FindProperty("reactionNames");
     }
 
-    public override void OnInspectorGUI()
+    protected override void DrawGui()
     {
-        serializedObject.Update();
         var action = (Action) target;
-
         EditorGUILayout.Space();
+        if (action.transform.childCount == 0)
+            GUI.enabled = false;
+        EditorGUILayout.PropertyField(_groupTrigger);
+        GUI.enabled = true;
+
         var specifyReactionsLabel = new GUIContent("Specify reactions",
             "If enabled, allows you to specify which reactions this action will trigger."
         );
@@ -31,10 +36,10 @@ public class ActionEditor : Editor
         }
 
         EditorGUILayout.EndToggleGroup();
+    }
 
-        DrawPropertiesExcluding(serializedObject, ExcludedProperties);
-
-        serializedObject.ApplyModifiedProperties();
-        EditorApplication.update.Invoke();
+    protected override IEnumerable<string> GetIgnoredFields()
+    {
+        return new[] {"groupTrigger", "specifyReactions", "reactionNames"};
     }
 }

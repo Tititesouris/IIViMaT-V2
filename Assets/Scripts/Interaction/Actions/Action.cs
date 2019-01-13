@@ -10,7 +10,10 @@ namespace Interaction.Actions
     public abstract class Action : MonoBehaviour
     {
         // TODO: Give option to only trigger reactions with an AND or a XOR of actions. Or maybe a metaReaction AND and XOR?
-        
+
+        [Tooltip("If enabled, the action will also trigger reactions on objects of this group.")]
+        public bool groupTrigger;
+
         public bool specifyReactions;
 
         public List<string> reactionNames = new List<string>();
@@ -27,10 +30,10 @@ namespace Interaction.Actions
         {
             UpdateReactions();
         }
-        
+
         private void UpdateReactions()
         {
-            var reactions = GetComponents<Reaction>();
+            var reactions = groupTrigger ? GetComponentsInChildren<Reaction>() : GetComponents<Reaction>();
 
             if (specifyReactions)
             {
