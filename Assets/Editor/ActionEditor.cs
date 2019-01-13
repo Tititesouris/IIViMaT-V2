@@ -7,12 +7,15 @@ using UnityEngine;
 public class ActionEditor : IivimatEditor
 {
     private SerializedProperty _groupTrigger;
+    
+    private SerializedProperty _specifyReactions;
 
     private SerializedProperty _reactionNames;
 
     protected override void LoadGui()
     {
         _groupTrigger = serializedObject.FindProperty("groupTrigger");
+        _specifyReactions = serializedObject.FindProperty("specifyReactions");
         _reactionNames = serializedObject.FindProperty("reactionNames");
     }
 
@@ -20,22 +23,23 @@ public class ActionEditor : IivimatEditor
     {
         var action = (Action) target;
         EditorGUILayout.Space();
+
         if (action.transform.childCount == 0)
             GUI.enabled = false;
         EditorGUILayout.PropertyField(_groupTrigger);
         GUI.enabled = true;
 
+        EditorGUILayout.Space();
         var specifyReactionsLabel = new GUIContent("Specify reactions",
             "If enabled, allows you to specify which reactions this action will trigger."
         );
-        action.specifyReactions = EditorGUILayout.BeginToggleGroup(specifyReactionsLabel, action.specifyReactions);
+        EditorGUILayout.PropertyField(_specifyReactions, specifyReactionsLabel);
 
         if (action.specifyReactions)
         {
-            ListEditor.Show(_reactionNames, "Reaction", "No reaction name specified", "Some reaction names are empty");
+            ListEditor.Show(_reactionNames, typeof(string), "Reaction", "No reaction name specified!",
+                "Some reaction names are empty!");
         }
-
-        EditorGUILayout.EndToggleGroup();
     }
 
     protected override IEnumerable<string> GetIgnoredFields()

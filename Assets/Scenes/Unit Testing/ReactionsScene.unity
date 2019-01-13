@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -337,10 +337,10 @@ MonoBehaviour:
   nbRepeat: 1
   targets:
   - {fileID: 1715752971}
-  propagateAll: 1
+  triggerSpecific: 0
   nbPropagations: 1
   randomPropagation: 0
-  removeTargetOnPropagation: 0
+  removeTriggeredTargets: 0
   specifyActions: 1
   actionNames:
   - fadein
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1
@@ -456,10 +456,10 @@ MonoBehaviour:
   nbRepeat: 1
   targets:
   - {fileID: 1715752971}
-  propagateAll: 1
+  triggerSpecific: 0
   nbPropagations: 1
   randomPropagation: 0
-  removeTargetOnPropagation: 0
+  removeTriggeredTargets: 0
   specifyActions: 1
   actionNames:
   - fixedview
@@ -728,7 +728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -1116,10 +1116,10 @@ MonoBehaviour:
   nbRepeat: 1
   targets:
   - {fileID: 1715752971}
-  propagateAll: 1
+  triggerSpecific: 0
   nbPropagations: 1
   randomPropagation: 0
-  removeTargetOnPropagation: 0
+  removeTriggeredTargets: 0
   specifyActions: 1
   actionNames:
   - fadeout
@@ -1236,7 +1236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -1244,10 +1244,10 @@ MonoBehaviour:
   nbRepeat: 1
   targets:
   - {fileID: 1715752971}
-  propagateAll: 1
-  nbPropagations: 1
+  triggerSpecific: 0
+  nbPropagations: 5
   randomPropagation: 0
-  removeTargetOnPropagation: 0
+  removeTriggeredTargets: 0
   specifyActions: 1
   actionNames:
   - blackandwhite
@@ -1588,7 +1588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1
@@ -1596,10 +1596,10 @@ MonoBehaviour:
   nbRepeat: 1
   targets:
   - {fileID: 1715752971}
-  propagateAll: 1
+  triggerSpecific: 0
   nbPropagations: 1
   randomPropagation: 0
-  removeTargetOnPropagation: 0
+  removeTriggeredTargets: 0
   specifyActions: 1
   actionNames:
   - teleport
@@ -1648,14 +1648,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
   repeat: 0
   nbRepeat: 1
   visibility: 0
-  toggleVisibility: 1
 --- !u!114 &1040212355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1976,13 +1975,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
   repeat: 0
   nbRepeat: 1
-  randomColor: 1
+  randomColor: 0
   color: {r: 0.6320754, g: 0.020870427, b: 0.020870427, a: 0}
 --- !u!114 &1385365034
 MonoBehaviour:
@@ -2084,7 +2083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -2324,7 +2323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: fadein
-  triggerTime: 0
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1.1
@@ -2345,7 +2344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: blackandwhite
-  triggerTime: 0
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1.1
@@ -2383,7 +2382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: fadeout
-  triggerTime: 0
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1.1
@@ -2499,7 +2498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: fixedview
-  triggerTime: 0
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1
@@ -2538,7 +2537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: teleport
-  triggerTime: 0
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1
@@ -2575,7 +2574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: view
-  triggerTime: 0
+  triggerDuration: 1
   delay: 5
   triggerOnlyOnce: 0
   cooldown: 0
@@ -2595,7 +2594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: followview
-  triggerTime: 0
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1
@@ -2658,7 +2657,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionName: 
-  triggerTime: 1
+  triggerDuration: 1
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 1
@@ -2666,10 +2665,10 @@ MonoBehaviour:
   nbRepeat: 1
   targets:
   - {fileID: 1715752971}
-  propagateAll: 1
+  triggerSpecific: 0
   nbPropagations: 1
   randomPropagation: 0
-  removeTargetOnPropagation: 0
+  removeTriggeredTargets: 0
   specifyActions: 1
   actionNames:
   - followview

@@ -22,7 +22,7 @@ namespace Interaction.Reactions
         public string reactionName;
 
         [Tooltip("The amount of time in seconds to be continuously triggered for in order to react.")]
-        public float triggerTime = 1;
+        public float triggerDuration = 1;
 
         [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
         public float delay;
@@ -87,9 +87,9 @@ namespace Interaction.Reactions
             _nbRepeated = 0;
 
             // If triggering takes time
-            if (triggerTime > 0)
+            if (triggerDuration > 0)
             {
-                _startTriggerCoroutine = StartTrigger(actor, hit, triggerTime);
+                _startTriggerCoroutine = StartTrigger(actor, hit, triggerDuration);
                 StartCoroutine(_startTriggerCoroutine);
                 return false;
             }

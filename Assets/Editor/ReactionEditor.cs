@@ -10,14 +10,14 @@ public class ReactionEditor : IivimatEditor
 {
     private SerializedProperty _reactionName;
 
-    private SerializedProperty _triggerTime;
+    private SerializedProperty _triggerDuration;
 
     private SerializedProperty _delay;
 
     protected override void LoadGui()
     {
         _reactionName = serializedObject.FindProperty("reactionName");
-        _triggerTime = serializedObject.FindProperty("triggerTime");
+        _triggerDuration = serializedObject.FindProperty("triggerDuration");
         _delay = serializedObject.FindProperty("delay");
     }
 
@@ -29,9 +29,13 @@ public class ReactionEditor : IivimatEditor
         var actions = Selection.activeGameObject.GetComponentsInParent<Action>();
         if (!actions.Any(action => action.specifyReactions) && reaction.reactionName != null && reaction.reactionName.Length == 0)
             GUI.enabled = false;
+        EditorGUIUtility.labelWidth = 100;
         EditorGUILayout.PropertyField(_reactionName);
         GUI.enabled = true;
-        EditorGUILayout.PropertyField(_triggerTime);
+        EditorGUILayout.Space();
+        
+        EditorGUIUtility.labelWidth = 120;
+        EditorGUILayout.PropertyField(_triggerDuration);
         EditorGUILayout.PropertyField(_delay);
 
         var triggerOnlyOnceLabel = new GUIContent("Trigger only once",
@@ -62,10 +66,11 @@ public class ReactionEditor : IivimatEditor
             }
             EditorGUI.indentLevel--;
         }
+        EditorGUILayout.Space();
     }
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new [] {"reactionName", "triggerTime", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
+        return new [] {"reactionName", "triggerDuration", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
     }
 }

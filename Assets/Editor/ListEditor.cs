@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class ListEditor
 {
-    public static void Show(SerializedProperty list, string elementName, string noElementError,
+    public static void Show(SerializedProperty list, Type type, string elementName, string noElementError,
         string emptyElementWarning)
     {
         if (!list.isArray)
@@ -19,7 +19,7 @@ public class ListEditor
 
         if (list.arraySize == 0)
             EditorGUILayout.HelpBox(noElementError, MessageType.Error);
-        else if (AnyEmptyElement(list))
+        else if (AnyEmptyElement(list, type))
             EditorGUILayout.HelpBox(emptyElementWarning, MessageType.Warning);
 
         EditorGUILayout.PropertyField(list, new GUIContent(list.displayName + " (" + list.arraySize + ")"));
@@ -46,11 +46,17 @@ public class ListEditor
         }
     }
 
-    private static bool AnyEmptyElement(SerializedProperty list)
+    private static bool AnyEmptyElement(SerializedProperty list, Type type)
     {
         for (var i = 0; i < list.arraySize; i++)
-            if (list.GetArrayElementAtIndex(i).stringValue.Length == 0)
+        {
+            var item = list.GetArrayElementAtIndex(i);
+            if (type == typeof(string) && item.stringValue.Length == 0)
                 return true;
+            if (type == typeof(GameObject) && item.objectReferenceValue == null)
+                return true;
+        }
+
         return false;
     }
 }

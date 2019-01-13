@@ -31,7 +31,6 @@ namespace Interaction.Actors
 
         [Tooltip("If set to 1, the gaze will only trigger reactions on the first object with reactions in its path." +
                  "If set to another number, the gaze will trigger reactions on up to that number of object with reactions in its path.")]
-        [Range(1, 10)]
         public int nbObjectsToTrigger = 1;
 
         private static int _interactableLayerMask;

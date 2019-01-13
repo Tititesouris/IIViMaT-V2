@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Interaction.Actions;
 using Interaction.Actors;
 using UnityEngine;
+using Action = Interaction.Actions.Action;
 
 namespace Interaction.Reactions.Meta
 {
@@ -10,27 +13,23 @@ namespace Interaction.Reactions.Meta
         [Tooltip("List of the objects that will be triggered.")]
         public GameObject[] targets;
 
-        [Tooltip("If enabled, trigger all targets.")]
-        public bool propagateAll = true;
+        public bool triggerSpecific;
 
-        [Tooltip("The number of targets that will be triggered.")]
         public int nbPropagations = 1;
 
-        [Tooltip("If enabled, [Nb Propagations] random targets will be triggered." +
-                 "If disabled, the first [Nb Propagations] targets will be triggered.")]
         public bool randomPropagation;
 
         [Tooltip("If enabled, the targets triggered will be removed from the list and thus cannot be triggered again.")]
-        public bool removeTargetOnPropagation;
+        public bool removeTriggeredTargets;
 
         public bool specifyActions;
 
-        public string[] actionNames;
+        public List<string> actionNames = new List<string>();
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             var selectedTargets = (randomPropagation ? targets.OrderBy(x => Rnd.Next()).ToArray() : targets)
-                .Take(propagateAll ? targets.Length : nbPropagations).ToArray();
+                .Take(triggerSpecific ? nbPropagations : targets.Length).ToArray();
             foreach (var target in selectedTargets)
             {
                 var actions = target.GetComponents<Action>();
@@ -43,7 +42,7 @@ namespace Interaction.Reactions.Meta
                 }
             }
 
-            if (removeTargetOnPropagation) targets = targets.Where(x => !selectedTargets.Contains(x)).ToArray();
+            if (removeTriggeredTargets) targets = targets.Where(x => !selectedTargets.Contains(x)).ToArray();
 
             return true;
         }
