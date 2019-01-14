@@ -29,17 +29,35 @@ public class CameraViewMode : MonoBehaviour
 
     private void Update()
     {
-        if (target != null)
+            if (target != null)
         {
+            var camPos = Vector3.zero;
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.GetComponent<Camera>() != null)
+                {
+                    camPos = child.localPosition;
+                    break;
+                }
+
+            }
             switch (viewMode)
             {
                 case ViewMode.FreeView:
                     break;
                 case ViewMode.FixedView:
-                    transform.position = target.transform.position;
+                    var destination = target.transform.position;
+                    destination.y -= 1.75f;
+                    destination.x -= camPos.x;
+                    destination.z -= camPos.z;
+                    transform.position = destination;
                     break;
                 case ViewMode.FollowView:
-                    target.transform.position = transform.position;
+                    destination = transform.position;
+                    destination.y += 1.75f;
+                    destination.x += camPos.x;
+                    destination.z += camPos.z;
+                    target.transform.position = destination;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

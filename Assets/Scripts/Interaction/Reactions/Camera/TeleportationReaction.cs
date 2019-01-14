@@ -35,14 +35,16 @@ namespace Interaction.Reactions.Camera
         {
             var startTime = Time.time;
             var startPos = transform.position;
+            var destination = target.transform.position;
+            destination.y -= 1.75f;
             do
             {
                 transform.position =
-                    Vector3.Lerp(startPos, target.transform.position, (Time.time - startTime) / Duration);
+                    Vector3.Lerp(startPos, destination, (Time.time - startTime) / Duration);
                 yield return null;
             } while (Time.time - startTime < Duration);
 
-            transform.position = target.transform.position;
+            transform.position = destination;
             _teleportCoroutine = null;
         }
 

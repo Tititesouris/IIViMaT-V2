@@ -16,12 +16,12 @@ namespace Interaction.Reactions.Camera
         protected new void Awake()
         {
             base.Awake();
-            if (GetComponent<UnityEngine.Camera>() == null)
+            /*if (GetComponent<UnityEngine.Camera>() == null)
             {
                 EditorUtility.DisplayDialog("Error", "Camera Reactions can only be placed on cameras:\n" +
                                                      GetType().Name + " placed on " + name, "Ok");
                 EditorApplication.isPlaying = false;
-            }
+            }*/
         }
 
         protected new void Start()

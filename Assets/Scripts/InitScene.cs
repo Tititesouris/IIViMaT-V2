@@ -15,9 +15,9 @@ public class InitScene : MonoBehaviour
 
     private IEnumerator LoadDevice(string newDevice, bool enable)
     {
-        XRSettings.LoadDeviceByName(newDevice);
+        //XRSettings.LoadDeviceByName(newDevice);
         yield return null;
-        XRSettings.enabled = enable;
+        //XRSettings.enabled = enable;
     }
 
     private void EnableVR()
