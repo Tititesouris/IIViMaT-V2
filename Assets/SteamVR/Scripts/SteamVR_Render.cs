@@ -4,6 +4,7 @@
 //
 //=============================================================================
 
+using System;
 using UnityEngine;
 using System.Collections;
 using Valve.VR;
@@ -250,7 +251,11 @@ namespace Valve.VR
             Camera.onPreCull += OnCameraPreCull;
 #endif
             var types = new EVRScreenshotType[] { EVRScreenshotType.StereoPanorama };
-            OpenVR.Screenshots.HookScreenshot(types);
+            try
+            {
+                OpenVR.Screenshots.HookScreenshot(types);
+            }
+            catch(NullReferenceException){}
         }
 
         void OnDisable()

@@ -21,15 +21,15 @@ public class CameraViewMode : MonoBehaviour
         if (viewMode != ViewMode.FreeView && target == null)
         {
             EditorUtility.DisplayDialog("Error", "Camera View Mode is missing valid target:\n" +
-                "View Mode: " + viewMode + "\n" +
-                "Target: " + target, "Ok");
+                                                 "View Mode: " + viewMode + "\n" +
+                                                 "Target: " + target, "Ok");
             EditorApplication.isPlaying = false;
         }
     }
 
     private void Update()
     {
-            if (target != null)
+        if (target != null)
         {
             var camPos = Vector3.zero;
             foreach (Transform child in transform)
@@ -39,8 +39,8 @@ public class CameraViewMode : MonoBehaviour
                     camPos = child.localPosition;
                     break;
                 }
-
             }
+
             switch (viewMode)
             {
                 case ViewMode.FreeView:
