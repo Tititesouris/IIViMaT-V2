@@ -15,12 +15,16 @@ public class TransformReactionEditor : ReactionEditor
             reaction.GetType() == typeof(OrientationTransformReaction) ? "orientation" :
             reaction.GetType() == typeof(ScaleTransformReaction) ? "scale" :
             reaction.GetType() == typeof(SizeTransformReaction) ? "size" :
+            reaction.GetType() == typeof(RotationTransformReaction) ? "rotation" :
             "UNKNOWN";
 
         var transformValuesLabel = new GUIContent(
             transformName.First().ToString().ToUpper() + transformName.Substring(1),
             "The object whose " + transformName + " the new " + transformName + " is calculated from.");
         reaction.transformValues = EditorGUILayout.Vector3Field(transformValuesLabel, reaction.transformValues);
+        EditorGUILayout.HelpBox("X: Horizontal axis\n" +
+                                "Y: Vertical axis\n" +
+                                "Z: Depth axis", MessageType.Info);
 
         var relativeToLabel = new GUIContent("Relative to",
             "Select which object " + transformName + " the new " + transformName + " is relative to:\n" +

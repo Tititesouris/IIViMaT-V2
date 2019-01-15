@@ -23,7 +23,7 @@ namespace Interaction.Reactions.Transform
                 case RelativeToOptions.Actor:
                     transform.localScale = actor.transform.localScale + transformValues;
                     break;
-                case RelativeToOptions.Camera:
+                case RelativeToOptions.Head:
                     transform.localScale = UnityEngine.Camera.current.transform.localScale + transformValues;
                     break;
                 default:

@@ -10,7 +10,7 @@ namespace Interaction.Reactions.Transform
             Self,
             Object,
             Actor,
-            Camera
+            Head
         }
         public Vector3 transformValues;
 

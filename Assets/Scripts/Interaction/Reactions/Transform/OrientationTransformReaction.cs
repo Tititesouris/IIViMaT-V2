@@ -23,7 +23,7 @@ namespace Interaction.Reactions.Transform
                 case RelativeToOptions.Actor:
                     transform.rotation = actor.transform.rotation * Quaternion.Euler(transformValues);
                     break;
-                case RelativeToOptions.Camera:
+                case RelativeToOptions.Head:
                     transform.rotation = UnityEngine.Camera.current.transform.rotation * Quaternion.Euler(transformValues);
                     break;
                 default:

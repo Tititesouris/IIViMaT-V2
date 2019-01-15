@@ -4,32 +4,33 @@ using UnityEngine;
 
 namespace Interaction.Reactions.Transform
 {
-    public class ScaleTransformReaction : TransformReaction
+    public class RotationTransformReaction : TransformReaction
     {
 
+        public float angle;
+        
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             switch (relativeTo)
             {
                 case RelativeToOptions.World:
-                    transform.localScale = transformValues;
+                    transform.RotateAround(Vector3.zero, transformValues, angle);
                     break;
                 case RelativeToOptions.Self:
-                    transform.localScale = Vector3.Scale(transform.localScale, transformValues);
+                    transform.RotateAround(transform.position, transformValues, angle);
                     break;
                 case RelativeToOptions.Object:
-                    transform.localScale = Vector3.Scale(referenceObject.transform.localScale, transformValues);
+                    transform.RotateAround(referenceObject.transform.position, transformValues, angle);
                     break;
                 case RelativeToOptions.Actor:
-                    transform.localScale = Vector3.Scale(actor.transform.localScale, transformValues);
+                    transform.RotateAround(actor.transform.position, transformValues, angle);
                     break;
                 case RelativeToOptions.Head:
-                    transform.localScale = Vector3.Scale(UnityEngine.Camera.current.transform.localScale, transformValues);
+                    transform.RotateAround(UnityEngine.Camera.current.transform.position, transformValues, angle);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
             return true;
         }
     }
