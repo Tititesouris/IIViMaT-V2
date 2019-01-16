@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Interaction.Actions;
 using UnityEditor;
 using UnityEngine;
@@ -25,9 +26,14 @@ namespace Interaction.Actors
         [Tooltip("The time in seconds between every VideoTime action.")]
         public float timeStep = 1f;
 
+        [Tooltip("The range within which the actor can trigger actions.")]
+        public float reach = 1f;
+
         private VideoPlayer _videoPlayer;
 
         private double _nextTime;
+
+        private int _nbLooped;
 
         private bool _playing;
 
@@ -59,6 +65,7 @@ namespace Interaction.Actors
             _videoPlayer.loopPointReached += source =>
             {
                 _nextTime = 0;
+                _nbLooped++;
                 if (triggerEndVideoActions)
                     EndVideoTriggers();
             };
@@ -68,7 +75,8 @@ namespace Interaction.Actors
         {
             _triggeredActions = new List<Action>();
 
-            var interactables = GameObject.FindGameObjectsWithTag("Interactable");
+            var interactables = GameObject.FindGameObjectsWithTag("Interactable")
+                .Where(obj => (obj.transform.position - transform.position).magnitude <= reach).ToArray();
             if (_playing != _videoPlayer.isPlaying)
             {
                 if (triggerPlayVideoActions && !_playing)
@@ -131,18 +139,28 @@ namespace Interaction.Actors
             return triggered;
         }
 
-        private bool StartVideoTriggers()
-        {
-// TODO Start triggers
-            Debug.LogError("Not Implemented Yet: StartVideoTrigger");
-            return false;
-        }
-
         private bool EndVideoTriggers()
         {
-// TODO End triggers
-            Debug.LogError("Not Implemented Yet: EndVideoTrigger");
-            return false;
+            var interactables = GameObject.FindGameObjectsWithTag("Interactable")
+                .Where(obj => (obj.transform.position - transform.position).magnitude <= reach).ToArray();
+            var triggered = false;
+            foreach (var interactable in interactables)
+            {
+                var actions = interactable.GetComponents<Action>();
+                foreach (var action in actions)
+                {
+                    var endVideoAction = action as EndVideoAction;
+                    if (endVideoAction != null)
+                    {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
+                        endVideoAction.Trigger(this);
+                        triggered = true;
+                    }
+                }
+            }
+
+            return triggered;
         }
 
         private bool VideoTimeTriggers(IEnumerable<GameObject> interactables)
@@ -158,7 +176,7 @@ namespace Interaction.Actors
                     {
                         if (!_triggeredActions.Contains(action))
                             _triggeredActions.Add(action);
-                        videoTimeAction.Trigger(this, _videoPlayer.time);
+                        videoTimeAction.Trigger(this, _nbLooped, _videoPlayer.time);
                         triggered = true;
                     }
                 }

@@ -11,35 +11,45 @@ namespace Interaction.Actions
 
         [Tooltip("If enabled, react every [Interval] seconds of the video after [Time] seconds have passed.")]
         public bool repeat;
-        
+
         [Tooltip("The time in seconds between each repeat.")]
         public float interval = 1f;
 
-        private bool _triggered;
-        
-        private double _lastInterval;
+        private bool _triggeredStart;
 
-        public bool Trigger(Actor actor, double videoTime)
+        private double _nextTime;
+
+        private int _nbLooped;
+
+        public bool Trigger(Actor actor, int nbLooped, double videoTime)
         {
             if (!isActiveAndEnabled)
                 return false;
-            
-            if (_triggered)
+
+            if (nbLooped > _nbLooped)
             {
-                if (repeat && startTime + _lastInterval + interval <= videoTime)
+                _nbLooped++;
+                _triggeredStart = false;
+            }
+            if (videoTime >= startTime)
+            {
+                if (_triggeredStart)
                 {
-                    _lastInterval = interval * (int)((videoTime - startTime) / interval);
+                    if (repeat && videoTime >= _nextTime)
+                    {
+                        _nextTime += interval;
+                        return TriggerTime(actor);
+                    }
+                }
+                else
+                {
+                    _triggeredStart = true;
+                    _nextTime = startTime + interval;
                     return TriggerTime(actor);
                 }
             }
-            else
-            {
-                if (videoTime >= startTime)
-                {
-                    _triggered = true;
-                    return TriggerTime(actor);
-                }
-            }
+
+
             return false;
         }
 

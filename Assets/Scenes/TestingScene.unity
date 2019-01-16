@@ -113,6 +113,39 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!21 &131124927
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &186437916
 Prefab:
   m_ObjectHideFlags: 0
@@ -155,81 +188,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e6d7fe451f4ea84ba0208511efedb2f, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &205651509 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1442812234906970, guid: fe09186c92d4a204f931036524696104,
-    type: 2}
-  m_PrefabInternal: {fileID: 420130950}
---- !u!114 &205651517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 205651509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d198ce269926a8e45bd204bed28c3354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reactionName: 
-  triggerDuration: 0
-  delay: 0
-  triggerOnlyOnce: 1
-  cooldown: 0
-  repeat: 0
-  nbRepeat: 1
-  startTime: 0
-  loop: 0
---- !u!114 &205651518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 205651509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d360489ab527e8b48953967c40ef0849, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupTrigger: 0
-  specifyReactions: 0
-  reactionNames: []
-  startTime: 10
-  repeat: 0
-  interval: 1
---- !u!21 &339780494
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &420130950
 Prefab:
   m_ObjectHideFlags: 0
@@ -239,15 +197,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4090428133148284, guid: fe09186c92d4a204f931036524696104, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.93
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4090428133148284, guid: fe09186c92d4a204f931036524696104, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.85
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4090428133148284, guid: fe09186c92d4a204f931036524696104, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2.45
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4090428133148284, guid: fe09186c92d4a204f931036524696104, type: 2}
       propertyPath: m_LocalRotation.x
@@ -273,8 +231,23 @@ Prefab:
         type: 2}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: f985a3def62f5ff4fa3f932ffb2726a2,
+      objectReference: {fileID: 32900000, guid: 3906bf92f15a8d7438575c528617a443,
         type: 3}
+    - target: {fileID: 114802029776693756, guid: fe09186c92d4a204f931036524696104,
+        type: 2}
+      propertyPath: reach
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 328484070521159428, guid: fe09186c92d4a204f931036524696104,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 328484070521159428, guid: fe09186c92d4a204f931036524696104,
+        type: 2}
+      propertyPath: m_Looping
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe09186c92d4a204f931036524696104, type: 2}
   m_IsPrefabAsset: 0
@@ -321,12 +294,12 @@ Prefab:
         type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1824136730}
+      objectReference: {fileID: 1792519692}
     - target: {fileID: 23192969348697010, guid: a468208fe0dc32f45a88bb90d9528f0b,
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 339780494}
+      objectReference: {fileID: 131124927}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a468208fe0dc32f45a88bb90d9528f0b, type: 2}
   m_IsPrefabAsset: 0
@@ -341,8 +314,9 @@ GameObject:
   - component: {fileID: 1693703437}
   - component: {fileID: 1693703436}
   - component: {fileID: 1693703435}
-  - component: {fileID: 1693703434}
   - component: {fileID: 1693703433}
+  - component: {fileID: 1693703439}
+  - component: {fileID: 1693703434}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -361,8 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0389cd6480182244583c9923a64e15eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reactionName: reaction1
-  triggerDuration: 1
+  reactionName: 
+  triggerDuration: 0
   delay: 0
   triggerOnlyOnce: 0
   cooldown: 0
@@ -378,13 +352,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1693703432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f21a74106c8f6e1459a521fa0ea390f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a1b3737fec51476ea9ade6a571cc3c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   groupTrigger: 0
-  specifyReactions: 1
-  reactionNames:
-  - reaction1
+  specifyReactions: 0
+  reactionNames: []
 --- !u!65 &1693703435
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -446,13 +419,34 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1693703432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.76, y: -3.4440935, z: 3.8536282}
+  m_LocalPosition: {x: 0, y: 0, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &1824136730
+--- !u!114 &1693703439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1693703432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b62b0e6f5ca604b43948c127c3756366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactionName: 
+  triggerDuration: 0
+  delay: 0
+  triggerOnlyOnce: 0
+  cooldown: 0
+  repeat: 0
+  nbRepeat: 1
+  transformValues: {x: 10, y: 0, z: 0}
+  relativeTo: 1
+  referenceObject: {fileID: 0}
+--- !u!43 &1792519692
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
