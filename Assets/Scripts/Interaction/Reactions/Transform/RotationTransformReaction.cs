@@ -6,9 +6,9 @@ namespace Interaction.Reactions.Transform
 {
     public class RotationTransformReaction : TransformReaction
     {
-
+        // TODO: Keep same orientation or not
         public float angle;
-        
+
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             switch (relativeTo)
@@ -31,6 +31,7 @@ namespace Interaction.Reactions.Transform
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             return true;
         }
     }
