@@ -10,7 +10,7 @@ namespace Interaction.Reactions.Meta
     public class PropagateReaction : Reaction
     {
         [Tooltip("List of the objects that will be triggered.")]
-        public GameObject[] targets;
+        public GameObject[] targets = new GameObject[0];
 
         public bool triggerSpecific;
 
@@ -23,7 +23,23 @@ namespace Interaction.Reactions.Meta
 
         public bool specifyActions;
 
-        public List<string> actionNames = new List<string>();
+        [SerializeField]
+        private List<PropagatedAction> actions = new List<PropagatedAction>();
+
+        public List<PropagatedAction> GetSpecifiedActions()
+        {
+            if (specifyActions)
+                return actions;
+
+            return new List<PropagatedAction>(
+                targets.Select(target => target.GetComponents<PropagatedAction>()).SelectMany(action => action)
+            );
+        }
+
+        public void SetSpecifiedActions(List<PropagatedAction> actions)
+        {
+            this.actions = actions;
+        }
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
@@ -31,13 +47,10 @@ namespace Interaction.Reactions.Meta
                 .Take(triggerSpecific ? nbPropagations : targets.Length).ToArray();
             foreach (var target in selectedTargets)
             {
-                var actions = target.GetComponents<Action>();
-                foreach (var action in actions)
+                foreach (var propagatedAction in target.GetComponents<PropagatedAction>())
                 {
-                    var propagatedAction = action as PropagatedAction;
-                    if (propagatedAction != null)
-                        if (!specifyActions || actionNames.Contains(propagatedAction.actionName))
-                            propagatedAction.Trigger(actor, hit, gameObject);
+                    if (!specifyActions || GetSpecifiedActions().Contains(propagatedAction))
+                        propagatedAction.Trigger(actor, hit, gameObject);
                 }
             }
 

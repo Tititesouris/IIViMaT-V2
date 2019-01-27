@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
-using Interaction.Actions;
 using Interaction.Reactions;
 using UnityEditor;
 using UnityEngine;
+using Action = Interaction.Actions.Action;
 
 [CustomEditor(typeof(Action), true)]
 public class ActionEditor : IivimatEditor
 {
+    private SerializedProperty _actionName;
+
     private SerializedProperty _groupTrigger;
 
     private SerializedProperty _specifyReactions;
 
-    private bool _firstTimeSpecifyingReaction = true;
-
     protected override void LoadGui()
     {
+        _actionName = serializedObject.FindProperty("actionName");
         _groupTrigger = serializedObject.FindProperty("groupTrigger");
         _specifyReactions = serializedObject.FindProperty("specifyReactions");
     }
@@ -23,6 +24,9 @@ public class ActionEditor : IivimatEditor
     {
         var action = (Action) target;
         EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(_actionName);
+
+        EditorGUILayout.Space();
 
         if (action.transform.childCount == 0)
             GUI.enabled = false;
@@ -30,7 +34,9 @@ public class ActionEditor : IivimatEditor
         GUI.enabled = true;
 
         EditorGUILayout.Space();
-        var reactions = action.groupTrigger ? action.GetComponentsInChildren<Reaction>() : action.GetComponents<Reaction>();
+        var reactions = action.groupTrigger
+            ? action.GetComponentsInChildren<Reaction>()
+            : action.GetComponents<Reaction>();
         if (reactions.Length <= 1)
         {
             GUI.enabled = false;
@@ -45,50 +51,40 @@ public class ActionEditor : IivimatEditor
         GUI.enabled = true;
 
         if (action.specifyReactions)
-
-        {
-            if (_firstTimeSpecifyingReaction)
-            {
-                action.reactions = new List<Reaction>(reactions);
-                _firstTimeSpecifyingReaction = false;
-            }
-
             ShowReactions(action, reactions);
-        }
+        EditorGUILayout.Space();
     }
 
     private static void ShowReactions(Action action, IEnumerable<Reaction> reactions)
     {
         EditorGUI.indentLevel++;
-        var counters = new Dictionary<string, int>();
+        var specifiedReactions = action.GetSpecifiedReactions();
+        if (specifiedReactions.Count == 0)
+            EditorGUILayout.HelpBox("No reaction specified!", MessageType.Error);
         foreach (var reaction in reactions)
         {
             EditorGUILayout.BeginHorizontal();
-            var reactionName = reaction.GetType().Name;
-            if (counters.ContainsKey(reactionName))
-                counters[reactionName]++;
-            else
-                counters[reactionName] = 1;
-            EditorGUILayout.LabelField(reactionName + " " + counters[reactionName]);
-            if (GUILayout.Toggle(action.reactions.Contains(reaction), new GUIContent(""), GUILayout.Width(12f)))
+            EditorGUILayout.LabelField(reaction.reactionName);
+            if (GUILayout.Toggle(specifiedReactions.Contains(reaction), new GUIContent(""), GUILayout.Width(12f)))
             {
-                if (!action.reactions.Contains(reaction))
-                    action.reactions.Add(reaction);
+                if (!specifiedReactions.Contains(reaction))
+                    specifiedReactions.Add(reaction);
             }
             else
             {
-                if (action.reactions.Contains(reaction))
-                    action.reactions.Remove(reaction);
+                if (specifiedReactions.Contains(reaction))
+                    specifiedReactions.Remove(reaction);
             }
 
             EditorGUILayout.EndHorizontal();
         }
+        action.SetSpecifiedReaction(specifiedReactions);
 
         EditorGUI.indentLevel--;
     }
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new[] {"groupTrigger", "specifyReactions", "reactions"};
+        return new[] {"actionName", "groupTrigger", "specifyReactions"};
     }
 }

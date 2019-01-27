@@ -12,8 +12,6 @@ namespace Interaction.Actions
         [Tooltip("The reactions will be triggered if the propagator is within this distance.")]
         public float triggerDistance = 1f;
 
-        public string actionName;
-
         public bool Trigger(Actor actor, RaycastHit? hit, GameObject propagator)
         {
             if (!isActiveAndEnabled)
@@ -21,7 +19,7 @@ namespace Interaction.Actions
             
             if (!triggerOnlyInRange || (propagator.transform.position - transform.position).magnitude < triggerDistance)
             {
-                foreach (var reaction in reactions) reaction.Trigger(actor, hit);
+                foreach (var reaction in GetSpecifiedReactions()) reaction.Trigger(actor, hit);
 
                 return true;
             }

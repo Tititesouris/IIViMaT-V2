@@ -6,6 +6,7 @@ using UnityEngine;
 [CustomEditor(typeof(Reaction), true)]
 public class ReactionEditor : IivimatEditor
 {
+    private SerializedProperty _reactionName;
 
     private SerializedProperty _triggerDuration;
 
@@ -13,6 +14,7 @@ public class ReactionEditor : IivimatEditor
 
     protected override void LoadGui()
     {
+        _reactionName = serializedObject.FindProperty("reactionName");
         _triggerDuration = serializedObject.FindProperty("triggerDuration");
         _delay = serializedObject.FindProperty("delay");
     }
@@ -21,7 +23,10 @@ public class ReactionEditor : IivimatEditor
     {
         var reaction = (Reaction) target;
         EditorGUILayout.Space();
-        
+        EditorGUILayout.PropertyField(_reactionName);
+
+        EditorGUILayout.Space();
+
         EditorGUIUtility.labelWidth = 120;
         EditorGUILayout.PropertyField(_triggerDuration);
         EditorGUILayout.PropertyField(_delay);
@@ -38,12 +43,12 @@ public class ReactionEditor : IivimatEditor
                 "The minimum amount of time in seconds between two triggers."
             );
             reaction.cooldown = EditorGUILayout.FloatField(cooldownLabel, reaction.cooldown);
-            
+
             var repeatLabel = new GUIContent("Repeat",
                 "Select to repeat automatically, without an action trigger, after the cooldown."
             );
             reaction.repeat = (Reaction.RepeatOptions) EditorGUILayout.EnumPopup(repeatLabel, reaction.repeat);
-            
+
             if (reaction.repeat == Reaction.RepeatOptions.Fixed)
             {
                 EditorGUI.indentLevel++;
@@ -52,13 +57,15 @@ public class ReactionEditor : IivimatEditor
                 reaction.nbRepeat = EditorGUILayout.IntField(relativeHeadingLabel, reaction.nbRepeat);
                 EditorGUI.indentLevel--;
             }
+
             EditorGUI.indentLevel--;
         }
+
         EditorGUILayout.Space();
     }
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new [] {"triggerDuration", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
+        return new[] {"reactionName", "triggerDuration", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
     }
 }

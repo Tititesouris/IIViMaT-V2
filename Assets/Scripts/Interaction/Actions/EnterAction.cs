@@ -21,7 +21,7 @@ namespace Interaction.Actions
                 if (!_actorInRange)
                 {
                     _actorInRange = true;
-                    foreach (var reaction in reactions) reaction.Trigger(actor, null);
+                    foreach (var reaction in GetSpecifiedReactions()) reaction.Trigger(actor, null);
 
                     return true;
                 }

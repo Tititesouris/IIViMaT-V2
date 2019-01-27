@@ -9,7 +9,7 @@ namespace Interaction.Actions
             if (!isActiveAndEnabled)
                 return false;
 
-            foreach (var reaction in reactions) reaction.Trigger(actor, null);
+            foreach (var reaction in GetSpecifiedReactions()) reaction.Trigger(actor, null);
 
             return true;
         }

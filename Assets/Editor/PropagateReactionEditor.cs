@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Interaction.Actions;
 using Interaction.Reactions;
 using Interaction.Reactions.Meta;
@@ -20,8 +21,6 @@ public class PropagateReactionEditor : ReactionEditor
 
     private SerializedProperty _specifyActions;
 
-    private SerializedProperty _actionNames;
-
     protected override void LoadGui()
     {
         base.LoadGui();
@@ -31,24 +30,23 @@ public class PropagateReactionEditor : ReactionEditor
         _randomPropagation = serializedObject.FindProperty("randomPropagation");
         _removeTriggeredTargets = serializedObject.FindProperty("removeTriggeredTargets");
         _specifyActions = serializedObject.FindProperty("specifyActions");
-        _actionNames = serializedObject.FindProperty("actionNames");
     }
 
     protected override void DrawGui()
     {
         base.DrawGui();
-        var reaction = (PropagateReaction) target;
+        var propagateReaction = (PropagateReaction) target;
 
         ListEditor.Show(_targets, typeof(GameObject), "Target", "No target specified!",
             "Some targets are not specified!");
 
         EditorGUIUtility.labelWidth = 150;
-        var triggerSpecificLabel = new GUIContent("Trigger specific targets",
+        var triggerSpecificLabel = new GUIContent("Trigger only some targets",
             "If enabled, only a set number of targets will be triggered. If disabled, all targets will be triggered."
         );
         EditorGUILayout.PropertyField(_triggerSpecific, triggerSpecificLabel);
 
-        if (reaction.triggerSpecific)
+        if (propagateReaction.triggerSpecific)
         {
             EditorGUIUtility.labelWidth = 180;
             EditorGUI.indentLevel++;
@@ -58,8 +56,8 @@ public class PropagateReactionEditor : ReactionEditor
             EditorGUILayout.PropertyField(_nbPropagations, nbPropagationsLabel);
 
             var randomPropagationLabel = new GUIContent("Random targets",
-                "If enabled, " + reaction.nbPropagations + " random targets will be triggered.\n" +
-                "If disabled, the first " + reaction.nbPropagations + " targets will be triggered."
+                "If enabled, " + propagateReaction.nbPropagations + " random targets will be triggered.\n" +
+                "If disabled, the first " + propagateReaction.nbPropagations + " targets will be triggered."
             );
             EditorGUILayout.PropertyField(_randomPropagation, randomPropagationLabel);
 
@@ -70,12 +68,64 @@ public class PropagateReactionEditor : ReactionEditor
         EditorGUILayout.Space();
 
         EditorGUIUtility.labelWidth = 120;
-        EditorGUILayout.PropertyField(_specifyActions);
-        if (reaction.specifyActions)
+
+        var targetsActions = new Dictionary<GameObject, PropagatedAction[]>();
+        foreach (var t in propagateReaction.targets)
         {
-            ListEditor.Show(_actionNames, typeof(string), "Action", "No action name specified!",
-                "Some action names are not specified!");
+            if (t != null)
+                targetsActions[t] = t.GetComponents<PropagatedAction>();
         }
+
+        EditorGUILayout.PropertyField(_specifyActions);
+        if (propagateReaction.specifyActions)
+            ShowActions(propagateReaction, targetsActions);
+    }
+
+    private static void ShowActions(PropagateReaction propagateReaction,
+        Dictionary<GameObject, PropagatedAction[]> targetsActions)
+    {
+        EditorGUI.indentLevel++;
+
+        var specifiedActions = propagateReaction.GetSpecifiedActions();
+        if (targetsActions.Values.Sum(actions => actions.Length) == 0)
+            EditorGUILayout.HelpBox("No PropagatedAction on targets!", MessageType.Warning);
+        else if (specifiedActions.Count == 0)
+            EditorGUILayout.HelpBox("No action specified!", MessageType.Error);
+        foreach (var targetAction in targetsActions)
+        {
+            EditorGUILayout.BeginHorizontal();
+            var targetName = targetAction.Key.name;
+            EditorGUILayout.LabelField(targetName);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUI.indentLevel++;
+
+            foreach (var action in targetAction.Value)
+            {
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUILayout.LabelField(action.actionName);
+                if (GUILayout.Toggle(specifiedActions.Contains(action), new GUIContent(""),
+                    GUILayout.Width(12f)))
+                {
+                    if (!specifiedActions.Contains(action))
+                        specifiedActions.Add(action);
+                }
+                else
+                {
+                    if (specifiedActions.Contains(action))
+                        specifiedActions.Remove(action);
+                }
+
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUI.indentLevel--;
+        }
+
+        propagateReaction.SetSpecifiedActions(specifiedActions);
+
+        EditorGUI.indentLevel--;
     }
 
     protected override IEnumerable<string> GetIgnoredFields()
@@ -83,7 +133,7 @@ public class PropagateReactionEditor : ReactionEditor
         var ignoredFields = new List<string>
         {
             "targets", "triggerSpecific", "nbPropagations", "randomPropagation", "removeTriggeredTargets",
-            "specifyActions", "actionNames"
+            "specifyActions"
         };
         ignoredFields.AddRange(base.GetIgnoredFields());
         return ignoredFields;

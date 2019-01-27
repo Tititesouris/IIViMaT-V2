@@ -7,6 +7,10 @@ namespace Interaction.Reactions
 {
     public abstract class Reaction : MonoBehaviour
     {
+        private static int _nextReactionId = 1;
+        
+        public string reactionName;
+        
         public enum RepeatOptions
         {
             No,
@@ -48,6 +52,13 @@ namespace Interaction.Reactions
 
         private IEnumerator _reactAfterDelayCoroutine;
 
+        public Reaction()
+        {
+            // TODO Separate Models and Monobehaviors, because using a constructor here is really weird.
+            // TODO have shorter default names
+            reactionName = GetType().Name + " " + _nextReactionId++;
+        }
+
         protected void Awake()
         {
         }
@@ -56,6 +67,11 @@ namespace Interaction.Reactions
         {
             if (Rnd == null)
                 Rnd = new Random();
+        }
+
+        protected void Update()
+        {
+            
         }
 
         protected abstract bool React(Actor actor, RaycastHit? hit);

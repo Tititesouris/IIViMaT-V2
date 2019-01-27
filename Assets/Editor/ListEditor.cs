@@ -17,33 +17,36 @@ public class ListEditor
             return;
         }
 
+        EditorGUILayout.LabelField(new GUIContent(list.displayName + " (" + list.arraySize + ")"));
+        EditorGUI.indentLevel++;
         if (list.arraySize == 0)
             EditorGUILayout.HelpBox(noElementError, MessageType.Error);
         else if (AnyEmptyElement(list, type))
-            EditorGUILayout.HelpBox(emptyElementWarning, MessageType.Warning);
+            EditorGUILayout.HelpBox(emptyElementWarning, MessageType.Error);
 
-        EditorGUILayout.PropertyField(list, new GUIContent(list.displayName + " (" + list.arraySize + ")"));
-        if (list.isExpanded)
+        for (var i = 0; i < list.arraySize; i++)
         {
-            EditorGUI.indentLevel++;
-            for (var i = 0; i < list.arraySize; i++)
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i),
+                new GUIContent(elementName + " " + (i + 1)));
+            if (GUILayout.Button(new GUIContent("X"), GUILayout.Width(18f)))
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i),
-                    new GUIContent(elementName + " " + (i + 1)));
-                if (GUILayout.Button(new GUIContent("X"), GUILayout.Width(18f)))
-                {
-                    list.DeleteArrayElementAtIndex(i);
-                }
-
-                EditorGUILayout.EndHorizontal();
+                list.GetArrayElementAtIndex(i).objectReferenceValue = null;
+                list.DeleteArrayElementAtIndex(i);
             }
 
-            if (GUILayout.Button(new GUIContent("+"), GUILayout.Width(EditorGUIUtility.currentViewWidth / 2f)))
-                list.InsertArrayElementAtIndex(list.arraySize);
-
-            EditorGUI.indentLevel--;
+            EditorGUILayout.EndHorizontal();
         }
+
+        var rect = GUILayoutUtility.GetRect (new GUIContent("+"), GUI.skin.button, GUILayout.Width(100));
+        rect.center = new Vector2(EditorGUIUtility.currentViewWidth / 2, rect.center.y);
+        if (GUI.Button(rect, "+", GUI.skin.button))
+        {
+            list.InsertArrayElementAtIndex(list.arraySize);
+            list.GetArrayElementAtIndex(list.arraySize - 1).objectReferenceValue = null;
+        }
+
+        EditorGUI.indentLevel--;
     }
 
     private static bool AnyEmptyElement(SerializedProperty list, Type type)
