@@ -10,14 +10,14 @@ namespace Interaction.Actors
     {
         // TODO: Option: Go through 360 spheres
         
-        [Header("Proximity")] [Tooltip("If enabled, the actor will trigger proximity actions.")]
+        [Header("Proximity")] [Tooltip("If enabled, the actor will trigger proximity, enter and exit actions.")]
         public bool triggerProximityActions = true;
 
         [Tooltip("The actor will not trigger proximity actions on object that are further away.")]
         public float maxProximityRange = 10f;
 
 
-        [Header("Gaze")] [Tooltip("If enabled, the actor will trigger gaze actions.")]
+        [Header("Gaze")] [Tooltip("If enabled, the actor will trigger gaze, lookAt and lookAway actions.")]
         public bool triggerGazeActions = true;
 
         [Tooltip("If enabled, the actor will trigger gaze actions in 360 spheres.")]
@@ -76,12 +76,28 @@ namespace Interaction.Actors
                 foreach (var action in actions)
                 {
                     var proximityAction = action as ProximityAction;
+                    var enterAction = action as EnterAction;
+                    var exitAction = action as ExitAction;
                     if (proximityAction != null)
                     {
                         if (!_triggeredActions.Contains(action))
                             _triggeredActions.Add(action);
 
                         proximityAction.Trigger(this);
+                    }
+                    else if (enterAction != null)
+                    {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
+
+                        enterAction.Trigger(this);
+                    }
+                    else if (exitAction != null)
+                    {
+                        if (!_triggeredActions.Contains(action))
+                            _triggeredActions.Add(action);
+
+                        exitAction.Trigger(this);
                     }
                 }
             }
