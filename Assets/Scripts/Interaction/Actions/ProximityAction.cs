@@ -17,7 +17,7 @@ namespace Interaction.Actions
             
             if ((actor.transform.position - transform.position).magnitude <= triggerDistance)
             {
-                foreach (var reaction in Reactions) reaction.Trigger(actor, null);
+                foreach (var reaction in reactions) reaction.Trigger(actor, null);
 
                 return true;
             }

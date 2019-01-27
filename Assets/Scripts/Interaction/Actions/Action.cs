@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Interaction.Reactions;
 using UnityEngine;
 
@@ -16,9 +13,7 @@ namespace Interaction.Actions
 
         public bool specifyReactions;
 
-        public List<string> reactionNames = new List<string>();
-
-        protected List<Reaction> Reactions = new List<Reaction>();
+        public List<Reaction> reactions;
 
         protected void Awake()
         {
@@ -26,28 +21,17 @@ namespace Interaction.Actions
             gameObject.tag = "Interactable";
         }
 
-        protected void Start()
+        private void Update()
         {
-            UpdateReactions();
-        }
-
-        private void UpdateReactions()
-        {
-            var reactions = groupTrigger ? GetComponentsInChildren<Reaction>() : GetComponents<Reaction>();
-
-            if (specifyReactions)
+            if (!specifyReactions)
             {
-                foreach (var reaction in reactions)
-                    if (reactionNames.Contains(reaction.reactionName, StringComparer.OrdinalIgnoreCase))
-                        Reactions.Add(reaction);
+                reactions = new List<Reaction>(groupTrigger ? GetComponentsInChildren<Reaction>() : GetComponents<Reaction>());
             }
-            else
-                Reactions = new List<Reaction>(reactions);
         }
 
         public void StopTrigger()
         {
-            foreach (var reaction in Reactions) reaction.StopTrigger();
+            foreach (var reaction in reactions) reaction.StopTrigger();
         }
     }
 }

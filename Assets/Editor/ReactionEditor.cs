@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Interaction.Actions;
 using Interaction.Reactions;
 using UnityEditor;
 using UnityEngine;
@@ -8,7 +6,6 @@ using UnityEngine;
 [CustomEditor(typeof(Reaction), true)]
 public class ReactionEditor : IivimatEditor
 {
-    private SerializedProperty _reactionName;
 
     private SerializedProperty _triggerDuration;
 
@@ -16,7 +13,6 @@ public class ReactionEditor : IivimatEditor
 
     protected override void LoadGui()
     {
-        _reactionName = serializedObject.FindProperty("reactionName");
         _triggerDuration = serializedObject.FindProperty("triggerDuration");
         _delay = serializedObject.FindProperty("delay");
     }
@@ -24,10 +20,6 @@ public class ReactionEditor : IivimatEditor
     protected override void DrawGui()
     {
         var reaction = (Reaction) target;
-        EditorGUILayout.Space();
-        
-        EditorGUIUtility.labelWidth = 100;
-        EditorGUILayout.PropertyField(_reactionName);
         EditorGUILayout.Space();
         
         EditorGUIUtility.labelWidth = 120;
@@ -67,6 +59,6 @@ public class ReactionEditor : IivimatEditor
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new [] {"reactionName", "triggerDuration", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
+        return new [] {"triggerDuration", "delay", "triggerOnlyOnce", "cooldown", "repeat", "nbRepeat"};
     }
 }

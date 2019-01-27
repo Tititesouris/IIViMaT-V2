@@ -18,11 +18,8 @@ namespace Interaction.Reactions
         // TODO: Option to interpolate over cooldown time
         // TODO: Option to loop until triggered again
 
-        [Tooltip("Give the reaction a unique name to identify it.")]
-        public string reactionName;
-
         [Tooltip("The amount of time in seconds to be continuously triggered for in order to react.")]
-        public float triggerDuration = 1;
+        public float triggerDuration;
 
         [Tooltip("The amount of time in seconds to wait before reacting when triggered.")]
         public float delay;

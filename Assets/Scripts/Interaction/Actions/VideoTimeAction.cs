@@ -55,7 +55,7 @@ namespace Interaction.Actions
 
         private bool TriggerTime(Actor actor)
         {
-            foreach (var reaction in Reactions) reaction.Trigger(actor, null);
+            foreach (var reaction in reactions) reaction.Trigger(actor, null);
             return true;
         }
     }
