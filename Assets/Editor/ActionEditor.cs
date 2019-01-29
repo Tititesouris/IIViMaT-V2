@@ -85,6 +85,6 @@ public class ActionEditor : IivimatEditor
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new[] {"actionName", "groupTrigger", "specifyReactions"};
+        return new[] {"actionName", "groupTrigger", "specifyReactions", "reactions"};
     }
 }
