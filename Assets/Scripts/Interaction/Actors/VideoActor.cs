@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Interaction.Actions;
 using UnityEditor;
 using UnityEngine;
@@ -9,25 +8,8 @@ namespace Interaction.Actors
 {
     public class VideoActor : Actor
     {
-        // TODO: Trigger on start/stop/loop
-
-        [Tooltip("If enabled the actor will trigger PlayVideo actions when the video is played.")]
-        public bool triggerPlayVideoActions = true;
-
-        [Tooltip("If enabled the actor will trigger PauseVideo actions when the video is paused.")]
-        public bool triggerPauseVideoActions = true;
-
-        [Tooltip("If enabled the actor will trigger EndVideo actions when the video ends.")]
-        public bool triggerEndVideoActions = true;
-
-        [Tooltip("If enabled the actor will trigger VideoTime actions every interval of time of the video.")]
-        public bool triggerVideoTimeActions = true;
-
-        [Tooltip("The time in seconds between every VideoTime action.")]
-        public float timeStep = 1f;
-
-        [Tooltip("The range within which the actor can trigger actions.")]
-        public float reach = 1f;
+        [Tooltip("The time in seconds between triggers of VideoTime actions.")]
+        public float timeStep = 0.1f;
 
         private VideoPlayer _videoPlayer;
 
@@ -66,8 +48,7 @@ namespace Interaction.Actors
             {
                 _nextTime = 0;
                 _nbLooped++;
-                if (triggerEndVideoActions)
-                    EndVideoTriggers();
+                EndVideoTriggers();
             };
         }
 
@@ -75,64 +56,42 @@ namespace Interaction.Actors
         {
             _triggeredActions = new List<Action>();
 
-            var interactables = GameObject.FindGameObjectsWithTag("Interactable")
-                .Where(obj => (obj.transform.position - transform.position).magnitude <= reach).ToArray();
             if (_playing != _videoPlayer.isPlaying)
             {
-                if (triggerPlayVideoActions && !_playing)
-                    PlayVideoTriggers(interactables);
-                if (triggerPauseVideoActions && _playing)
-                    PauseVideoTriggers(interactables);
+                PlayPauseVideoTriggers(_videoPlayer.isPlaying);
             }
 
             _playing = _videoPlayer.isPlaying;
-            if (_playing && triggerVideoTimeActions && _nextTime <= _videoPlayer.time)
+            if (_playing && _nextTime <= _videoPlayer.time)
             {
-                VideoTimeTriggers(interactables);
+                VideoTimeTriggers();
                 _nextTime = timeStep * (int) (1 + _videoPlayer.time / timeStep);
             }
 
             return _triggeredActions;
         }
 
-        private bool PlayVideoTriggers(IEnumerable<GameObject> interactables)
+        private bool PlayPauseVideoTriggers(bool play)
         {
             var triggered = false;
-            foreach (var interactable in interactables)
+            var actions = GetComponents<Action>();
+            foreach (var action in actions)
             {
-                var actions = interactable.GetComponents<Action>();
-                foreach (var action in actions)
+                var playAction = action as PlayVideoAction;
+                var pauseAction = action as PauseVideoAction;
+                if (play && playAction != null)
                 {
-                    var playAction = action as PlayVideoAction;
-                    if (playAction != null)
-                    {
-                        if (!_triggeredActions.Contains(action))
-                            _triggeredActions.Add(action);
-                        playAction.Trigger(this);
-                        triggered = true;
-                    }
+                    if (!_triggeredActions.Contains(action))
+                        _triggeredActions.Add(action);
+                    playAction.Trigger(this);
+                    triggered = true;
                 }
-            }
-
-            return triggered;
-        }
-
-        private bool PauseVideoTriggers(IEnumerable<GameObject> interactables)
-        {
-            var triggered = false;
-            foreach (var interactable in interactables)
-            {
-                var actions = interactable.GetComponents<Action>();
-                foreach (var action in actions)
+                else if (!play && pauseAction != null)
                 {
-                    var pauseAction = action as PauseVideoAction;
-                    if (pauseAction != null)
-                    {
-                        if (!_triggeredActions.Contains(action))
-                            _triggeredActions.Add(action);
-                        pauseAction.Trigger(this);
-                        triggered = true;
-                    }
+                    if (!_triggeredActions.Contains(action))
+                        _triggeredActions.Add(action);
+                    pauseAction.Trigger(this);
+                    triggered = true;
                 }
             }
 
@@ -141,44 +100,36 @@ namespace Interaction.Actors
 
         private bool EndVideoTriggers()
         {
-            var interactables = GameObject.FindGameObjectsWithTag("Interactable")
-                .Where(obj => (obj.transform.position - transform.position).magnitude <= reach).ToArray();
             var triggered = false;
-            foreach (var interactable in interactables)
+            var actions = GetComponents<Action>();
+            foreach (var action in actions)
             {
-                var actions = interactable.GetComponents<Action>();
-                foreach (var action in actions)
+                var endVideoAction = action as EndVideoAction;
+                if (endVideoAction != null)
                 {
-                    var endVideoAction = action as EndVideoAction;
-                    if (endVideoAction != null)
-                    {
-                        if (!_triggeredActions.Contains(action))
-                            _triggeredActions.Add(action);
-                        endVideoAction.Trigger(this);
-                        triggered = true;
-                    }
+                    if (!_triggeredActions.Contains(action))
+                        _triggeredActions.Add(action);
+                    endVideoAction.Trigger(this);
+                    triggered = true;
                 }
             }
 
             return triggered;
         }
 
-        private bool VideoTimeTriggers(IEnumerable<GameObject> interactables)
+        private bool VideoTimeTriggers()
         {
             var triggered = false;
-            foreach (var interactable in interactables)
+            var actions = GetComponents<Action>();
+            foreach (var action in actions)
             {
-                var actions = interactable.GetComponents<Action>();
-                foreach (var action in actions)
+                var videoTimeAction = action as VideoTimeAction;
+                if (videoTimeAction != null)
                 {
-                    var videoTimeAction = action as VideoTimeAction;
-                    if (videoTimeAction != null)
-                    {
-                        if (!_triggeredActions.Contains(action))
-                            _triggeredActions.Add(action);
-                        videoTimeAction.Trigger(this, _nbLooped, _videoPlayer.time);
-                        triggered = true;
-                    }
+                    if (!_triggeredActions.Contains(action))
+                        _triggeredActions.Add(action);
+                    videoTimeAction.Trigger(this, _nbLooped, _videoPlayer.time);
+                    triggered = true;
                 }
             }
 
