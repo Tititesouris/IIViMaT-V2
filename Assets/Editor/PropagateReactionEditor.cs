@@ -133,7 +133,7 @@ public class PropagateReactionEditor : ReactionEditor
         var ignoredFields = new List<string>
         {
             "targets", "triggerSpecific", "nbPropagations", "randomPropagation", "removeTriggeredTargets",
-            "specifyActions"
+            "specifyActions", "actions"
         };
         ignoredFields.AddRange(base.GetIgnoredFields());
         return ignoredFields;
