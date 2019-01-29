@@ -12,6 +12,10 @@ namespace Interaction.Actions
 
         public string actionName;
 
+        public bool specifyTarget;
+
+        public GameObject target;
+
         [Tooltip("If enabled, the action will also trigger reactions on objects of this group.")]
         public bool groupTrigger;
 
