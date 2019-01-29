@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Interaction.Reactions;
 using UnityEngine;
 
@@ -32,12 +33,12 @@ namespace Interaction.Actions
 
         public List<Reaction> GetSpecifiedReactions()
         {
-            if (specifyReactions)
-                return reactions;
-
-            return new List<Reaction>(
-                groupTrigger ? GetComponentsInChildren<Reaction>() : GetComponents<Reaction>()
-            );
+            if (!specifyReactions)
+                reactions = new List<Reaction>(
+                    groupTrigger ? GetComponentsInChildren<Reaction>() : GetComponents<Reaction>()
+                );
+            reactions.RemoveAll(reaction => reaction == null);
+            return reactions;
         }
 
         public void SetSpecifiedReaction(List<Reaction> reactions)
