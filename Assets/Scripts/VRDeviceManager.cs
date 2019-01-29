@@ -1,33 +1,43 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.XR;
 
-public class FirstPersonControls : MonoBehaviour
-{
+public class VRDeviceManager : MonoBehaviour {
 
     public float motionSpeed;
 
     public float rotationSpeed;
-    
+
     private bool _focused;
 
     private bool _sightHeadingMode;
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        _sightHeadingMode = false;
-        _focused = true;
+        if (!XRDevice.isPresent)
+        {
+            transform.position = new Vector3(0, 1.70f, 0);
+            Cursor.lockState = CursorLockMode.Locked;
+            _sightHeadingMode = false;
+            _focused = true;
+        }
     }
 
     private void Update()
     {
-        ToggleFocus();
-
-        if (_focused)
+        if (!XRDevice.isPresent)
         {
-            ToggleHeadingMode();
-            Turn();
-            Move();
+            ToggleFocus();
+
+            if (_focused)
+            {
+                ToggleHeadingMode();
+                Turn();
+                Move();
+            }
         }
+
     }
 
     private void ToggleFocus()

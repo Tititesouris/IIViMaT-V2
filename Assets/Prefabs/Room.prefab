@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4548478793703974}
   - component: {fileID: 114778590991120586}
   - component: {fileID: 114445834914164648}
+  - component: {fileID: 114038936178867984}
   m_Layer: 0
   m_Name: Feet
   m_TagString: Untagged
@@ -106,6 +107,7 @@ GameObject:
   - component: {fileID: 81149549644826610}
   - component: {fileID: 114244278632250596}
   - component: {fileID: 114204980163685652}
+  - component: {fileID: 114897961405473222}
   m_Layer: 0
   m_Name: Head
   m_TagString: MainCamera
@@ -150,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1801587498828634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.75, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4548478793703974}
@@ -315,6 +317,25 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1801587498828634}
   m_Enabled: 1
+--- !u!114 &114038936178867984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1341295353433964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0c6859edae7bf4fb158efd294acb03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactionName: TeleportationReaction 1
+  triggerDuration: 0
+  delay: 0
+  triggerOnlyOnce: 1
+  cooldown: 0
+  repeat: 0
+  nbRepeat: 1
+  target: {fileID: 0}
 --- !u!114 &114045907187514846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -488,7 +509,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1341295353433964}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3f534a7a991c524c9c3fd18fad9a050, type: 3}
   m_Name: 
@@ -529,6 +550,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Valve.VR.SteamVR_Behaviour_PoseEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114897961405473222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1801587498828634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e9e5ce774558e4788845f11202bb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motionSpeed: 2
+  rotationSpeed: 50
 --- !u!114 &114902261806063332
 MonoBehaviour:
   m_ObjectHideFlags: 1
