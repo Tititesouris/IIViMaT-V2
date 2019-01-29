@@ -37,6 +37,7 @@ public class ActionEditor : IivimatEditor
         var reactions = action.groupTrigger
             ? action.GetComponentsInChildren<Reaction>()
             : action.GetComponents<Reaction>();
+        
         if (reactions.Length <= 1)
         {
             GUI.enabled = false;

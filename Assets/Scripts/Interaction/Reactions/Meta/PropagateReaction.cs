@@ -23,17 +23,16 @@ namespace Interaction.Reactions.Meta
 
         public bool specifyActions;
 
-        [SerializeField]
-        private List<PropagatedAction> actions = new List<PropagatedAction>();
+        [SerializeField] private List<PropagatedAction> actions = new List<PropagatedAction>();
 
         public List<PropagatedAction> GetSpecifiedActions()
         {
-            if (specifyActions)
-                return actions;
-
-            return new List<PropagatedAction>(
-                targets.Select(target => target.GetComponents<PropagatedAction>()).SelectMany(action => action)
-            );
+            if (!specifyActions)
+                actions = new List<PropagatedAction>(
+                    targets.Select(target => target.GetComponents<PropagatedAction>()).SelectMany(action => action)
+                );
+            actions.RemoveAll(reaction => reaction == null);
+            return actions;
         }
 
         public void SetSpecifiedActions(List<PropagatedAction> actions)
