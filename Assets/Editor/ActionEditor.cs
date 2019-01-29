@@ -9,6 +9,10 @@ public class ActionEditor : IivimatEditor
 {
     private SerializedProperty _actionName;
 
+    private SerializedProperty _specifyTarget;
+
+    private SerializedProperty _targets;
+
     private SerializedProperty _groupTrigger;
 
     private SerializedProperty _specifyReactions;
@@ -16,6 +20,8 @@ public class ActionEditor : IivimatEditor
     protected override void LoadGui()
     {
         _actionName = serializedObject.FindProperty("actionName");
+        _specifyTarget = serializedObject.FindProperty("specifyTarget");
+        _targets = serializedObject.FindProperty("target");
         _groupTrigger = serializedObject.FindProperty("groupTrigger");
         _specifyReactions = serializedObject.FindProperty("specifyReactions");
     }
@@ -25,6 +31,16 @@ public class ActionEditor : IivimatEditor
         var action = (Action) target;
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(_actionName);
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(_specifyTarget);
+        if (action.specifyTarget)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(_targets);
+            EditorGUI.indentLevel--;
+        }
 
         EditorGUILayout.Space();
 
@@ -52,7 +68,14 @@ public class ActionEditor : IivimatEditor
         GUI.enabled = true;
 
         if (action.specifyReactions)
-            ShowReactions(action, reactions);
+            if (action.specifyTarget)
+            {
+                ShowReactions(action, action.target.GetComponents<Reaction>());
+            }
+            else
+            {
+                ShowReactions(action, reactions);
+            }
         EditorGUILayout.Space();
     }
 
@@ -86,6 +109,6 @@ public class ActionEditor : IivimatEditor
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new[] {"actionName", "groupTrigger", "specifyReactions", "reactions"};
+        return new[] {"actionName", "groupTrigger", "specifyReactions", "reactions", "target", "specifyTarget"};
     }
 }
