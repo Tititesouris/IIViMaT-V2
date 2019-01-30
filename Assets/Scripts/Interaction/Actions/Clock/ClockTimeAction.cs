@@ -27,7 +27,6 @@ namespace Interaction.Actions.Clock
             {
                 if (!_triggeredStart || repeat && clockTime >= _nextTime)
                 {
-                    Debug.Log(clockTime);
                     _nextTime = startTime + interval * Mathf.Floor((clockTime - startTime) / interval + 1);
                     _triggeredStart = true;
                     foreach (var reaction in GetSpecifiedReactions()) reaction.Trigger(actor, null);

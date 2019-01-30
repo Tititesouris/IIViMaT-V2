@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Interaction.Reactions.Camera;
+using Interaction.Reactions.Spectator;
 using UnityEditor;
-using UnityEngine;
 
 [CustomEditor(typeof(ChangeViewModeReaction), true)]
 public class ChangeViewModeReactionEditor : ReactionEditor

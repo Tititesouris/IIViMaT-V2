@@ -4,9 +4,9 @@ using Interaction.Actors;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-namespace Interaction.Reactions.Camera
+namespace Interaction.Reactions.Spectator
 {
-    public class TeleportationReaction : CameraReaction
+    public class TeleportationReaction : SpectatorReaction
     {
         [Tooltip("Target to teleport to.")] public GameObject target;
 

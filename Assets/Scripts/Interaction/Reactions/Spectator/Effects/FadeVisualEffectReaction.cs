@@ -3,9 +3,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-namespace Interaction.Reactions.Camera.Effects
+namespace Interaction.Reactions.Spectator.Effects
 {
-    public class FadeCameraEffectReaction : CameraEffectReaction
+    public class FadeVisualEffectReaction : VisualEffectReaction
     {
         public enum FadeOptions
         {

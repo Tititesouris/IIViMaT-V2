@@ -1,9 +1,9 @@
 ﻿using Interaction.Actors;
 using UnityEngine;
 
-namespace Interaction.Reactions.Camera
+namespace Interaction.Reactions.Spectator
 {
-    public class ChangeViewModeReaction : CameraReaction
+    public class ChangeViewModeReaction : SpectatorReaction
     {
         [Tooltip("Select which view mode is used by the camera.\n" +
                  "Free View: The camera can move freely" +

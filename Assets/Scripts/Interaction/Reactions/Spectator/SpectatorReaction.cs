@@ -1,28 +1,16 @@
 ﻿using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-namespace Interaction.Reactions.Camera
+namespace Interaction.Reactions.Spectator
 {
-    public abstract class CameraReaction : Reaction
+    public abstract class SpectatorReaction : Reaction
     {
         protected static PostProcessEffectSettings[] Effects;
 
         protected IEnumerator EffectCoroutine;
 
         private static PostProcessVolume _volume;
-
-        protected new void Awake()
-        {
-            base.Awake();
-            /*if (GetComponent<UnityEngine.Camera>() == null)
-            {
-                EditorUtility.DisplayDialog("Error", "Camera Reactions can only be placed on cameras:\n" +
-                                                     GetType().Name + " placed on " + name, "Ok");
-                EditorApplication.isPlaying = false;
-            }*/
-        }
 
         protected new void Start()
         {

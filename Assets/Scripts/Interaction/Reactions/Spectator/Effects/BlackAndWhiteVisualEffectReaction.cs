@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using UnityEngine.Rendering.PostProcessing;
 
-namespace Interaction.Reactions.Camera.Effects
+namespace Interaction.Reactions.Spectator.Effects
 {
-    public class BlackAndWhiteCameraEffectReaction : CameraEffectReaction
+    public class BlackAndWhiteVisualEffectReaction : VisualEffectReaction
     {
         private ColorGrading _colorGrading;
 
