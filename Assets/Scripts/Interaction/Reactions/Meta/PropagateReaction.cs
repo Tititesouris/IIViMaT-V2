@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Interaction.Actions;
+using Interaction.Actions.Meta;
 using Interaction.Actors;
 using UnityEngine;
 using Action = Interaction.Actions.Action;

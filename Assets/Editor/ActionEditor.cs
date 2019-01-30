@@ -2,7 +2,6 @@
 using Interaction.Reactions;
 using UnityEditor;
 using UnityEngine;
-using Valve.VR.InteractionSystem;
 using Action = Interaction.Actions.Action;
 
 [CustomEditor(typeof(Action), true)]

@@ -1,9 +1,8 @@
-﻿using System;
-using Interaction.Actors;
+﻿using Interaction.Actors;
 
-namespace Interaction.Actions
+namespace Interaction.Actions.Video
 {
-    public class PlayVideoAction : Action
+    public class PauseVideoAction : Action
     {
         public bool Trigger(Actor actor)
         {

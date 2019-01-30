@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Interaction.Actions;
+using Interaction.Actions.Video;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Video;
@@ -25,19 +26,6 @@ namespace Interaction.Actors
         {
             base.Awake();
             _videoPlayer = GetComponent<VideoPlayer>();
-            if (_videoPlayer == null)
-            {
-                EditorUtility.DisplayDialog("Error", "Video Actor can only be placed on a 360 Sphere:\n" +
-                                                     GetType().Name + " placed on " + name, "Ok");
-                EditorApplication.isPlaying = false;
-            }
-
-            if (_videoPlayer.clip == null)
-            {
-                EditorUtility.DisplayDialog("Error", "360 Sphere does not have any video to play:\n" +
-                                                     name, "Ok");
-                EditorApplication.isPlaying = false;
-            }
         }
 
         protected new void Start()

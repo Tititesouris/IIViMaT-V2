@@ -1,8 +1,7 @@
-﻿using System;
-using Interaction.Actors;
+﻿using Interaction.Actors;
 using UnityEngine;
 
-namespace Interaction.Actions
+namespace Interaction.Actions.Video
 {
     public class VideoTimeAction : Action
     {

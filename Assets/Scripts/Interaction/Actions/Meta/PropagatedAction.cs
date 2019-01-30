@@ -1,7 +1,7 @@
 ﻿using Interaction.Actors;
 using UnityEngine;
 
-namespace Interaction.Actions
+namespace Interaction.Actions.Meta
 {
     public class PropagatedAction : Action
     {

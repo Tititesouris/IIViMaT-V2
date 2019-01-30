@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Interaction.Actions;
+using Interaction.Actions.Spectator;
 using UnityEditor;
 using UnityEngine;
 
@@ -180,9 +181,8 @@ namespace Interaction.Actors
         {
             // TODO: Gaze 360
             // Rays don't hit the object they come from inside of it. Solution:
-            // Make ray come from outside towards actor. Take the last hit object, it will be the 360 sphere.
-            var hits = Physics.RaycastAll(transform.position + transform.forward * interactionReach, -transform.forward,
-                interactionReach, _interactableLayerMask);
+            // Make ray come from outside towards actor. Take the last hit object, it will be the 360 sphere:
+            //var hits = Physics.RaycastAll(transform.position + transform.forward * interactionReach, -transform.forward, interactionReach, _interactableLayerMask);
 
             return false;
         }

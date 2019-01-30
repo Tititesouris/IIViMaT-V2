@@ -1,11 +1,11 @@
 ﻿using Interaction.Actors;
 using UnityEngine;
 
-namespace Interaction.Actions
+namespace Interaction.Actions.Spectator
 {
-    public class ExitAction : Action
+    public class EnterAction : Action
     {
-        [Tooltip("The reactions will be triggered when the actor exits the zone within this radius of the object.")]
+        [Tooltip("The reactions will be triggered when the actor enters the zone within this radius of the object.")]
         public float triggerDistance = 1f;
 
         private bool _actorInRange;
@@ -16,11 +16,11 @@ namespace Interaction.Actions
             if (!isActiveAndEnabled)
                 return false;
 
-            if ((actor.transform.position - transform.position).magnitude >= triggerDistance)
+            if ((actor.transform.position - transform.position).magnitude <= triggerDistance)
             {
-                if (_actorInRange)
+                if (!_actorInRange)
                 {
-                    _actorInRange = false;
+                    _actorInRange = true;
                     foreach (var reaction in GetSpecifiedReactions()) reaction.Trigger(actor, null);
 
                     return true;
@@ -28,7 +28,7 @@ namespace Interaction.Actions
             }
             else
             {
-                _actorInRange = true;
+                _actorInRange = false;
             }
 
             return false;

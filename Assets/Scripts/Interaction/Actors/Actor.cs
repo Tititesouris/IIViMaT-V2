@@ -12,12 +12,12 @@ namespace Interaction.Actors
 
         protected void Awake()
         {
-            
+            _lastTriggeredActions = new List<Action>();
         }
 
         protected void Start()
         {
-            _lastTriggeredActions = new List<Action>();
+            
         }
 
         protected void Update()
