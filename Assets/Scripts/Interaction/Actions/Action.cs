@@ -12,9 +12,9 @@ namespace Interaction.Actions
 
         public string actionName;
 
-        public bool specifyTarget;
+        public bool triggerOtherObject;
 
-        public GameObject target;
+        public GameObject objectToTrigger;
 
         [Tooltip("If enabled, the action will also trigger reactions on objects of this group.")]
         public bool groupTrigger;
@@ -35,13 +35,34 @@ namespace Interaction.Actions
             gameObject.tag = "Interactable";
         }
 
+        public List<Reaction> GetTargetedReactions()
+        {
+            var targetedReactions = new List<Reaction>();
+            if (!triggerOtherObject)
+            {
+                targetedReactions = new List<Reaction>(
+                    groupTrigger
+                        ? GetComponentsInChildren<Reaction>()
+                        : GetComponents<Reaction>()
+                );
+            }
+            else if (objectToTrigger != null)
+            {
+                targetedReactions = new List<Reaction>(
+                    groupTrigger
+                        ? objectToTrigger.GetComponentsInChildren<Reaction>()
+                        : objectToTrigger.GetComponents<Reaction>()
+                );
+            }
+
+            targetedReactions.RemoveAll(reaction => reaction == null);
+            return targetedReactions;
+        }
+
         public List<Reaction> GetSpecifiedReactions()
         {
             if (!specifyReactions)
-                reactions = new List<Reaction>(
-                    groupTrigger ? GetComponentsInChildren<Reaction>() : GetComponents<Reaction>()
-                );
-            reactions.RemoveAll(reaction => reaction == null);
+                reactions = GetTargetedReactions();
             return reactions;
         }
 

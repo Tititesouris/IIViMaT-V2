@@ -207,12 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3811fbba421cb0545be378a2f674e481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerPlayVideoActions: 1
-  triggerPauseVideoActions: 1
-  triggerEndVideoActions: 1
-  triggerVideoTimeActions: 1
-  timeStep: 1
-  reach: 1
+  timeStep: 0.1
 --- !u!328 &328452773355486184
 VideoPlayer:
   m_ObjectHideFlags: 1
@@ -232,7 +227,7 @@ VideoPlayer:
   m_AspectRatio: 2
   m_DataSource: 0
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
+  m_AudioOutputMode: 1
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
@@ -241,7 +236,7 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
   m_WaitForFirstFrame: 1

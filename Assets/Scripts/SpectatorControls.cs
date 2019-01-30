@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR;
 
-public class VRDeviceManager : MonoBehaviour {
+public class SpectatorControls : MonoBehaviour {
 
-    public float motionSpeed;
+    public float motionSpeed = 2;
 
-    public float rotationSpeed;
+    public float rotationSpeed = 50;
 
     private bool _focused;
 

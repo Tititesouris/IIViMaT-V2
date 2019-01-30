@@ -2,6 +2,7 @@
 using Interaction.Reactions;
 using UnityEditor;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 using Action = Interaction.Actions.Action;
 
 [CustomEditor(typeof(Action), true)]
@@ -9,9 +10,9 @@ public class ActionEditor : IivimatEditor
 {
     private SerializedProperty _actionName;
 
-    private SerializedProperty _specifyTarget;
+    private SerializedProperty _triggerOtherObject;
 
-    private SerializedProperty _targets;
+    private SerializedProperty _objectToTrigger;
 
     private SerializedProperty _groupTrigger;
 
@@ -20,8 +21,8 @@ public class ActionEditor : IivimatEditor
     protected override void LoadGui()
     {
         _actionName = serializedObject.FindProperty("actionName");
-        _specifyTarget = serializedObject.FindProperty("specifyTarget");
-        _targets = serializedObject.FindProperty("target");
+        _triggerOtherObject = serializedObject.FindProperty("triggerOtherObject");
+        _objectToTrigger = serializedObject.FindProperty("objectToTrigger");
         _groupTrigger = serializedObject.FindProperty("groupTrigger");
         _specifyReactions = serializedObject.FindProperty("specifyReactions");
     }
@@ -34,11 +35,11 @@ public class ActionEditor : IivimatEditor
 
         EditorGUILayout.Space();
 
-        EditorGUILayout.PropertyField(_specifyTarget);
-        if (action.specifyTarget)
+        EditorGUILayout.PropertyField(_triggerOtherObject);
+        if (action.triggerOtherObject)
         {
             EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(_targets);
+            EditorGUILayout.PropertyField(_objectToTrigger);
             EditorGUI.indentLevel--;
         }
 
@@ -50,11 +51,9 @@ public class ActionEditor : IivimatEditor
         GUI.enabled = true;
 
         EditorGUILayout.Space();
-        var reactions = action.groupTrigger
-            ? action.GetComponentsInChildren<Reaction>()
-            : action.GetComponents<Reaction>();
-        
-        if (reactions.Length <= 1)
+        var reactions = action.GetTargetedReactions();
+
+        if (reactions.Count <= 1)
         {
             GUI.enabled = false;
             action.specifyReactions = false;
@@ -68,14 +67,8 @@ public class ActionEditor : IivimatEditor
         GUI.enabled = true;
 
         if (action.specifyReactions)
-            if (action.specifyTarget)
-            {
-                ShowReactions(action, action.target.GetComponents<Reaction>());
-            }
-            else
-            {
-                ShowReactions(action, reactions);
-            }
+            ShowReactions(action, reactions);
+
         EditorGUILayout.Space();
     }
 
@@ -102,6 +95,7 @@ public class ActionEditor : IivimatEditor
 
             EditorGUILayout.EndHorizontal();
         }
+
         action.SetSpecifiedReaction(specifiedReactions);
 
         EditorGUI.indentLevel--;
@@ -109,6 +103,7 @@ public class ActionEditor : IivimatEditor
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        return new[] {"actionName", "groupTrigger", "specifyReactions", "reactions", "target", "specifyTarget"};
+        return new[]
+            {"actionName", "triggerOtherObject", "objectToTrigger", "groupTrigger", "specifyReactions", "reactions"};
     }
 }

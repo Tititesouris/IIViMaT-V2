@@ -95,8 +95,7 @@ AudioSource:
   m_GameObject: {fileID: 1442812234906970}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300001, guid: 95096f29d1ddcd647ace66f3641d42f5,
-    type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -194,12 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3811fbba421cb0545be378a2f674e481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerPlayVideoActions: 1
-  triggerPauseVideoActions: 1
-  triggerEndVideoActions: 1
-  triggerVideoTimeActions: 1
-  timeStep: 1
-  reach: 1
+  timeStep: 0.1
 --- !u!135 &135360200026643524
 SphereCollider:
   m_ObjectHideFlags: 1
