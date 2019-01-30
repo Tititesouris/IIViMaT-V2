@@ -16,6 +16,12 @@ namespace Interaction.Reactions.Camera
 
         private const float Duration = 0.1f;
 
+        [Tooltip("Select which view mode is used by the camera.\n" +
+                 "Free View: The camera can move freely" +
+                 "Fixed View: The camera is stuck inside a 360 sphere" +
+                 "Follow View: The camera can move freely but a 360 sphere follows so that the camera is always inside it")]
+        public CameraViewMode.ViewMode viewMode;
+
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             if (_teleportCoroutine == null)
@@ -24,7 +30,7 @@ namespace Interaction.Reactions.Camera
                 StartCoroutine(_teleportCoroutine);
                 StartEffect();
                 EffectCoroutine = Effect(Time.time, Duration, true);
-                StartCoroutine(EffectCoroutine);
+                StartCoroutine(EffectCoroutine);      
                 return true;
             }
 
@@ -33,19 +39,21 @@ namespace Interaction.Reactions.Camera
 
         private IEnumerator Teleport()
         {
+            var feet = GameObject.FindWithTag("Player");
             var startTime = Time.time;
-            var startPos = transform.position;
-            var destination = target.transform.position;
-            destination.y -= 1.75f;
+            var startPos = feet.transform.position;
+            var destination = transform.position - (startPos + GameObject.FindWithTag("MainCamera").transform.position);
+            
             do
             {
-                transform.position =
+                feet.transform.position =
                     Vector3.Lerp(startPos, destination, (Time.time - startTime) / Duration);
                 yield return null;
-            } while (Time.time - startTime < Duration);
+            } while (Time.time - startTime <= Duration);
 
-            transform.position = destination;
+            feet.transform.position = destination;
             _teleportCoroutine = null;
+            GameObject.FindWithTag("Player").GetComponent<CameraViewMode>().SetViewMode(viewMode, gameObject);
         }
 
         protected override void StartEffect()

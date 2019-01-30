@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Interaction.Actions.Video;
+using Interaction.Actions.Clock;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(VideoTimeAction), true)]
-public class VideoTimeActionEditor : ActionEditor
+[CustomEditor(typeof(ClockTimeAction), true)]
+public class ClockTimeActionEditor : ActionEditor
 {
     private SerializedProperty _repeat;
 
@@ -21,7 +21,7 @@ public class VideoTimeActionEditor : ActionEditor
     protected override void DrawGui()
     {
         base.DrawGui();
-        var action = (VideoTimeAction)target;
+        var action = (ClockTimeAction)target;
         EditorGUILayout.PropertyField(_repeat);
         if (action.repeat)
         {

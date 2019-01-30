@@ -18,7 +18,7 @@ namespace Interaction.Reactions.Camera
         {
             if (viewMode != CameraViewMode.ViewMode.FreeView && videoSphere == null)
                 return false;
-            GetComponent<CameraViewMode>().SetViewMode(viewMode, videoSphere);
+            GameObject.FindWithTag("Player").GetComponent<CameraViewMode>().SetViewMode(viewMode, videoSphere);
             return true;
         }
     }

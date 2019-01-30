@@ -47,14 +47,14 @@ public class CameraViewMode : MonoBehaviour
                     break;
                 case ViewMode.FixedView:
                     var destination = target.transform.position;
-                    destination.y -= 1.75f;
+                    destination.y -= camPos.y;
                     destination.x -= camPos.x;
                     destination.z -= camPos.z;
                     transform.position = destination;
                     break;
                 case ViewMode.FollowView:
                     destination = transform.position;
-                    destination.y += 1.75f;
+                    destination.y += camPos.y;
                     destination.x += camPos.x;
                     destination.z += camPos.z;
                     target.transform.position = destination;
