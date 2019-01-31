@@ -6,7 +6,7 @@ namespace Interaction.Reactions.Transform
 {
     public class RotationTransformReaction : TransformReaction
     {
-        // TODO: Keep same orientation or not
+        // TODO: Option to keep same orientation or not
         public float angle;
 
         protected override bool React(Actor actor, RaycastHit? hit)
@@ -26,7 +26,7 @@ namespace Interaction.Reactions.Transform
                     transform.RotateAround(actor.transform.position, transformValues, angle);
                     break;
                 case RelativeToOptions.Head:
-                    transform.RotateAround(UnityEngine.Camera.current.transform.position, transformValues, angle);
+                    transform.RotateAround(Camera.current.transform.position, transformValues, angle);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

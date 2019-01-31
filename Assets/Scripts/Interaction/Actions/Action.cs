@@ -7,7 +7,6 @@ namespace Interaction.Actions
 {
     public abstract class Action : MonoBehaviour
     {
-        // TODO: Give option to only trigger reactions with an AND or a XOR of actions. Or maybe a metaReaction AND and XOR?
         private static int _nextActionId = 1;
 
         public string actionName;

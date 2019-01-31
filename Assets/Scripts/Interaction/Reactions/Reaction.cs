@@ -7,6 +7,7 @@ namespace Interaction.Reactions
 {
     public abstract class Reaction : MonoBehaviour
     {
+        // TODO: Option to loop until triggered again
         private static int _nextReactionId = 1;
         
         public string reactionName;
@@ -17,10 +18,6 @@ namespace Interaction.Reactions
             Indefinitely,
             Fixed
         }
-        // TODO: Random cooldown
-        // TODO: Random delay
-        // TODO: Option to interpolate over cooldown time
-        // TODO: Option to loop until triggered again
 
         [Tooltip("The amount of time in seconds to be continuously triggered for in order to react.")]
         public float triggerDuration;
@@ -55,7 +52,7 @@ namespace Interaction.Reactions
         public Reaction()
         {
             // TODO Separate Models and Monobehaviors, because using a constructor here is really weird.
-            // TODO have shorter default names
+            // TODO Shorter default names
             reactionName = GetType().Name + " " + _nextReactionId++;
         }
 

@@ -4,8 +4,6 @@ using UnityEditor;
 public abstract class IivimatEditor : Editor
 {
     
-    // TODO: multi selection
-    
     private void OnEnable()
     {
         LoadGui();
