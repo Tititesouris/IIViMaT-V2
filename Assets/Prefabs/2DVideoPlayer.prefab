@@ -9,22 +9,22 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1688830754000938}
+  m_RootGameObject: {fileID: 1650333125445766}
   m_IsPrefabAsset: 1
---- !u!1 &1688830754000938
+--- !u!1 &1650333125445766
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4289461612145760}
-  - component: {fileID: 33829371647503012}
-  - component: {fileID: 23723892840880210}
-  - component: {fileID: 64153458692491710}
-  - component: {fileID: 328452773355486184}
-  - component: {fileID: 82694600296931518}
-  - component: {fileID: 114830069387314258}
+  - component: {fileID: 4560283818417148}
+  - component: {fileID: 33828213316108050}
+  - component: {fileID: 23385406875754598}
+  - component: {fileID: 64915616396385800}
+  - component: {fileID: 328367478094945000}
+  - component: {fileID: 82250162461715750}
+  - component: {fileID: 114892809894675842}
   m_Layer: 0
   m_Name: 2DVideoPlayer
   m_TagString: Untagged
@@ -32,25 +32,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4289461612145760
+--- !u!4 &4560283818417148
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.03, z: -0.943}
+  m_GameObject: {fileID: 1650333125445766}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1.03, z: 3.12}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!23 &23723892840880210
+--- !u!23 &23385406875754598
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
+  m_GameObject: {fileID: 1650333125445766}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -80,19 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33829371647503012
+--- !u!33 &33828213316108050
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
+  m_GameObject: {fileID: 1650333125445766}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &64153458692491710
+--- !u!64 &64915616396385800
 MeshCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
+  m_GameObject: {fileID: 1650333125445766}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -101,12 +101,12 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!82 &82694600296931518
+--- !u!82 &82250162461715750
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
+  m_GameObject: {fileID: 1650333125445766}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -196,24 +196,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114830069387314258
+--- !u!114 &114892809894675842
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
+  m_GameObject: {fileID: 1650333125445766}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3811fbba421cb0545be378a2f674e481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeStep: 0.1
---- !u!328 &328452773355486184
+--- !u!328 &328367478094945000
 VideoPlayer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1688830754000938}
+  m_GameObject: {fileID: 1650333125445766}
   m_Enabled: 1
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1

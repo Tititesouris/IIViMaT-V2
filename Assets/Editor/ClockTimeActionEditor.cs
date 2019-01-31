@@ -7,6 +7,8 @@ using UnityEditor;
 [CustomEditor(typeof(ClockTimeAction), true)]
 public class ClockTimeActionEditor : ActionEditor
 {
+    private SerializedProperty _startTime;
+
     private SerializedProperty _repeat;
 
     private SerializedProperty _interval;
@@ -14,6 +16,7 @@ public class ClockTimeActionEditor : ActionEditor
     protected override void LoadGui()
     {
         base.LoadGui();
+        _startTime = serializedObject.FindProperty("startTime");
         _repeat = serializedObject.FindProperty("repeat");
         _interval = serializedObject.FindProperty("interval");
     }
@@ -21,7 +24,8 @@ public class ClockTimeActionEditor : ActionEditor
     protected override void DrawGui()
     {
         base.DrawGui();
-        var action = (ClockTimeAction)target;
+        var action = (ClockTimeAction) target;
+        EditorGUILayout.PropertyField(_startTime);
         EditorGUILayout.PropertyField(_repeat);
         if (action.repeat)
         {
@@ -33,7 +37,7 @@ public class ClockTimeActionEditor : ActionEditor
 
     protected override IEnumerable<string> GetIgnoredFields()
     {
-        var ignoredFields = new List<string> { "interval", "repeat" };
+        var ignoredFields = new List<string> {"startTime", "interval", "repeat"};
         ignoredFields.AddRange(base.GetIgnoredFields());
         return ignoredFields;
     }

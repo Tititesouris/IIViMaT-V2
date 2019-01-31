@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Interaction.Actors;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -8,7 +9,7 @@ namespace Interaction.Reactions.Spectator
 {
     public class TeleportationReaction : SpectatorReaction
     {
-        [Tooltip("Target to teleport to.")] public GameObject target;
+        [Tooltip("Object to teleport to.")] public GameObject teleportTo;
 
         private IEnumerator _teleportCoroutine;
 
@@ -20,7 +21,7 @@ namespace Interaction.Reactions.Spectator
                  "Free View: The camera can move freely" +
                  "Fixed View: The camera is stuck inside a 360 sphere" +
                  "Follow View: The camera can move freely but a 360 sphere follows so that the camera is always inside it")]
-        public CameraViewMode.ViewMode viewMode;
+        public SpectatorViewMode.ViewMode viewMode;
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
@@ -30,7 +31,7 @@ namespace Interaction.Reactions.Spectator
                 StartCoroutine(_teleportCoroutine);
                 StartEffect();
                 EffectCoroutine = Effect(Time.time, Duration, true);
-                StartCoroutine(EffectCoroutine);      
+                StartCoroutine(EffectCoroutine);
                 return true;
             }
 
@@ -39,21 +40,21 @@ namespace Interaction.Reactions.Spectator
 
         private IEnumerator Teleport()
         {
-            var feet = GameObject.FindWithTag("Player");
             var startTime = Time.time;
-            var startPos = feet.transform.position;
-            var destination = transform.position - (startPos + GameObject.FindWithTag("MainCamera").transform.position);
-            
+            var startPos = SpectatorHead.transform.position;
+            var destination = teleportTo.transform.position;
+
             do
             {
-                feet.transform.position =
-                    Vector3.Lerp(startPos, destination, (Time.time - startTime) / Duration);
+                SpectatorFeet.transform.position =
+                    Vector3.Lerp(startPos, destination, (Time.time - startTime) / Duration)
+                    - SpectatorHead.transform.localPosition;
                 yield return null;
             } while (Time.time - startTime <= Duration);
 
-            feet.transform.position = destination;
+            SpectatorFeet.transform.position = destination - SpectatorHead.transform.localPosition;
             _teleportCoroutine = null;
-            GameObject.FindWithTag("Player").GetComponent<CameraViewMode>().SetViewMode(viewMode, gameObject);
+            SpectatorFeet.GetComponent<SpectatorViewMode>().SetViewMode(viewMode, gameObject);
         }
 
         protected override void StartEffect()

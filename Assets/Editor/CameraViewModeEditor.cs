@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 
-[CustomEditor(typeof(CameraViewMode), true)]
+[CustomEditor(typeof(SpectatorViewMode), true)]
 public class CameraViewModeEditor : IivimatEditor
 {
     private SerializedProperty _viewMode;
@@ -16,11 +16,11 @@ public class CameraViewModeEditor : IivimatEditor
 
     protected override void DrawGui()
     {
-        var cameraViewMode = (CameraViewMode) target;
+        var cameraViewMode = (SpectatorViewMode) target;
         EditorGUILayout.Space();
 
         EditorGUILayout.PropertyField(_viewMode);
-        if (cameraViewMode.viewMode != CameraViewMode.ViewMode.FreeView)
+        if (cameraViewMode.viewMode != SpectatorViewMode.ViewMode.FreeView)
         {
             EditorGUILayout.PropertyField(_target);
         }

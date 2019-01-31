@@ -6,11 +6,23 @@ namespace Interaction.Reactions.Spectator
 {
     public abstract class SpectatorReaction : Reaction
     {
+
+        protected GameObject SpectatorFeet;
+        
+        protected GameObject SpectatorHead;
+        
         protected static PostProcessEffectSettings[] Effects;
 
         protected IEnumerator EffectCoroutine;
 
         private static PostProcessVolume _volume;
+
+        protected new void Awake()
+        {
+            base.Awake();
+            SpectatorFeet = GameObject.FindWithTag("Player");
+            SpectatorHead = GameObject.FindWithTag("MainCamera");
+        }
 
         protected new void Start()
         {

@@ -22,7 +22,7 @@ public class ChangeViewModeReactionEditor : ReactionEditor
         var reaction = (ChangeViewModeReaction) target;
 
         EditorGUILayout.PropertyField(_viewMode);
-        if (reaction.viewMode != CameraViewMode.ViewMode.FreeView)
+        if (reaction.viewMode != SpectatorViewMode.ViewMode.FreeView)
         {
             EditorGUILayout.PropertyField(_videoSphere);
         }

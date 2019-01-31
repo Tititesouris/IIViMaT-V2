@@ -9,20 +9,20 @@ public class ActionEditor : IivimatEditor
 {
     private SerializedProperty _actionName;
 
+    private SerializedProperty _groupTrigger;
+
     private SerializedProperty _triggerOtherObject;
 
     private SerializedProperty _objectToTrigger;
-
-    private SerializedProperty _groupTrigger;
 
     private SerializedProperty _specifyReactions;
 
     protected override void LoadGui()
     {
         _actionName = serializedObject.FindProperty("actionName");
+        _groupTrigger = serializedObject.FindProperty("groupTrigger");
         _triggerOtherObject = serializedObject.FindProperty("triggerOtherObject");
         _objectToTrigger = serializedObject.FindProperty("objectToTrigger");
-        _groupTrigger = serializedObject.FindProperty("groupTrigger");
         _specifyReactions = serializedObject.FindProperty("specifyReactions");
     }
 
@@ -33,7 +33,12 @@ public class ActionEditor : IivimatEditor
         EditorGUILayout.PropertyField(_actionName);
 
         EditorGUILayout.Space();
-
+        if (action.transform.childCount == 0)
+            GUI.enabled = false;
+        EditorGUILayout.PropertyField(_groupTrigger);
+        GUI.enabled = true;
+        
+        EditorGUILayout.Space();
         EditorGUILayout.PropertyField(_triggerOtherObject);
         if (action.triggerOtherObject)
         {
@@ -41,13 +46,6 @@ public class ActionEditor : IivimatEditor
             EditorGUILayout.PropertyField(_objectToTrigger);
             EditorGUI.indentLevel--;
         }
-
-        EditorGUILayout.Space();
-
-        if (action.transform.childCount == 0)
-            GUI.enabled = false;
-        EditorGUILayout.PropertyField(_groupTrigger);
-        GUI.enabled = true;
 
         EditorGUILayout.Space();
         var reactions = action.GetTargetedReactions();

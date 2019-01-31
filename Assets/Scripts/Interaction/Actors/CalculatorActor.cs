@@ -35,35 +35,39 @@ namespace Interaction.Actors
         protected override List<Action> Act()
         {
             _triggeredActions = new List<Action>();
-            var interactables = GameObject.FindGameObjectsWithTag("Interactable");
             if (!Equals(_calculator.value, _lastValue))
             {
-                CalculatorTriggers(interactables);
+                CalculatorTriggers();
                 _lastValue = _calculator.value;
             }
 
             return _triggeredActions;
         }
 
-        private bool CalculatorTriggers(ICollection<GameObject> interactables)
+        private bool CalculatorTriggers()
         {
-            foreach (var interactable in interactables)
+            var actions = GetComponents<Action>();
+            foreach (var action in actions)
             {
-                var actions = interactable.GetComponents<Action>();
-                foreach (var action in actions)
+                var equalsToAction = action as CalculatorEqualsToAction;
+                var multipleOfAction = action as CalculatorMultipleOfAction;
+                if (equalsToAction != null)
                 {
-                    var equalsToAction = action as CalculatorEqualsToAction;
-                    if (equalsToAction != null)
-                    {
-                        if (!_triggeredActions.Contains(action))
-                            _triggeredActions.Add(action);
+                    if (!_triggeredActions.Contains(action))
+                        _triggeredActions.Add(action);
 
-                        equalsToAction.Trigger(this, _calculator.value);
-                    }
+                    equalsToAction.Trigger(this, _calculator.value);
+                }
+                else if (multipleOfAction != null)
+                {
+                    if (!_triggeredActions.Contains(action))
+                        _triggeredActions.Add(action);
+
+                    multipleOfAction.Trigger(this, _calculator.value);
                 }
             }
 
-            return interactables.Count > 0;
+            return actions.Length > 0;
         }
     }
 }

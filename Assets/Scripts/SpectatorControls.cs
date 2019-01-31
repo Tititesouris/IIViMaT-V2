@@ -59,10 +59,7 @@ public class SpectatorControls : MonoBehaviour {
             Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime);
         var rotation = gameObject.transform.eulerAngles;
         rotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-        if (rotation.x < 180)
-            rotation.x = Mathf.Min(rotation.x, 90);
-        else
-            rotation.x = Mathf.Max(rotation.x, 270);
+        rotation.x = rotation.x < 180 ? Mathf.Min(rotation.x, 90) : Mathf.Max(rotation.x, 270);
         gameObject.transform.rotation = Quaternion.Euler(rotation);
     }
 

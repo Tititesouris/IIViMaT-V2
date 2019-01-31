@@ -6,7 +6,7 @@ namespace Interaction.Actions.Spectator
     public class EnterAction : Action
     {
         [Tooltip("The reactions will be triggered when the actor enters the zone within this radius of the object.")]
-        public float triggerDistance = 1f;
+        public float triggerDistance = 0.5f;
 
         private bool _actorInRange;
 

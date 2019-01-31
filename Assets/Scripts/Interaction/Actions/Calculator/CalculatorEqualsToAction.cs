@@ -5,7 +5,7 @@ namespace Interaction.Actions.Calculator
 {
     public class CalculatorEqualsToAction : CalculatorAction
     {
-        [Tooltip("The value the calculator must be equal to for the action to be triggered.")]
+        [Tooltip("The value the calculator must be equal to to trigger the action.")]
         public float value;
 
         public bool Trigger(Actor actor, float calculatorValue)

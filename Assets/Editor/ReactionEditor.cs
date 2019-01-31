@@ -31,6 +31,8 @@ public class ReactionEditor : IivimatEditor
         EditorGUILayout.PropertyField(_triggerDuration);
         EditorGUILayout.PropertyField(_delay);
 
+        EditorGUILayout.Space();
+
         var triggerOnlyOnceLabel = new GUIContent("Trigger only once",
             "If enabled, the reaction can only be triggered once."
         );
@@ -43,21 +45,20 @@ public class ReactionEditor : IivimatEditor
                 "The minimum amount of time in seconds between two triggers."
             );
             reaction.cooldown = EditorGUILayout.FloatField(cooldownLabel, reaction.cooldown);
+            EditorGUI.indentLevel--;
+        }
+        
+        var repeatLabel = new GUIContent("Repeat",
+            "Select to repeat automatically, without an action trigger, after the cooldown."
+        );
+        reaction.repeat = (Reaction.RepeatOptions) EditorGUILayout.EnumPopup(repeatLabel, reaction.repeat);
 
-            var repeatLabel = new GUIContent("Repeat",
-                "Select to repeat automatically, without an action trigger, after the cooldown."
-            );
-            reaction.repeat = (Reaction.RepeatOptions) EditorGUILayout.EnumPopup(repeatLabel, reaction.repeat);
-
-            if (reaction.repeat == Reaction.RepeatOptions.Fixed)
-            {
-                EditorGUI.indentLevel++;
-                var relativeHeadingLabel = new GUIContent("Number of repeats",
-                    "The number of times the reaction will repeat.");
-                reaction.nbRepeat = EditorGUILayout.IntField(relativeHeadingLabel, reaction.nbRepeat);
-                EditorGUI.indentLevel--;
-            }
-
+        if (reaction.repeat == Reaction.RepeatOptions.Fixed)
+        {
+            EditorGUI.indentLevel++;
+            var relativeHeadingLabel = new GUIContent("Number of repeats",
+                "The number of times the reaction will repeat.");
+            reaction.nbRepeat = EditorGUILayout.IntField(relativeHeadingLabel, reaction.nbRepeat);
             EditorGUI.indentLevel--;
         }
 
