@@ -15,7 +15,7 @@ public class SpectatorControls : MonoBehaviour {
     {
         if (!XRDevice.isPresent)
         {
-            transform.position = new Vector3(0, 1.70f, 0);
+            transform.position = new Vector3(transform.position.x, transform.position.y + 1.70f, transform.position.z);
             Cursor.lockState = CursorLockMode.Locked;
             _sightHeadingMode = false;
             _focused = true;
