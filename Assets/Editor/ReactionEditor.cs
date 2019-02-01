@@ -47,18 +47,26 @@ public class ReactionEditor : IivimatEditor
             reaction.cooldown = EditorGUILayout.FloatField(cooldownLabel, reaction.cooldown);
             EditorGUI.indentLevel--;
         }
-        
+
         var repeatLabel = new GUIContent("Repeat",
             "Select to repeat automatically, without an action trigger, after the cooldown."
         );
         reaction.repeat = (Reaction.RepeatOptions) EditorGUILayout.EnumPopup(repeatLabel, reaction.repeat);
 
-        if (reaction.repeat == Reaction.RepeatOptions.Fixed)
+        if (reaction.repeat != Reaction.RepeatOptions.No)
         {
             EditorGUI.indentLevel++;
-            var relativeHeadingLabel = new GUIContent("Number of repeats",
-                "The number of times the reaction will repeat.");
-            reaction.nbRepeat = EditorGUILayout.IntField(relativeHeadingLabel, reaction.nbRepeat);
+            if (reaction.repeat == Reaction.RepeatOptions.Fixed)
+            {
+                var relativeHeadingLabel = new GUIContent("Number of repeats",
+                    "The number of times the reaction will repeat.");
+                reaction.nbRepeat = EditorGUILayout.IntField(relativeHeadingLabel, reaction.nbRepeat);
+            }
+
+            var cooldownLabel = new GUIContent("Cooldown",
+                "The minimum amount of time in seconds between two triggers."
+            );
+            reaction.cooldown = EditorGUILayout.FloatField(cooldownLabel, reaction.cooldown);
             EditorGUI.indentLevel--;
         }
 
