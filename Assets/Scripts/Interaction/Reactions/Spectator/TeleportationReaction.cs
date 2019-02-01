@@ -54,7 +54,7 @@ namespace Interaction.Reactions.Spectator
 
             SpectatorFeet.transform.position = destination - SpectatorHead.transform.localPosition;
             _teleportCoroutine = null;
-            SpectatorFeet.GetComponent<SpectatorViewMode>().SetViewMode(viewMode, gameObject);
+            SpectatorFeet.GetComponent<SpectatorViewMode>().SetViewMode(viewMode, teleportTo);
         }
 
         protected override void StartEffect()
