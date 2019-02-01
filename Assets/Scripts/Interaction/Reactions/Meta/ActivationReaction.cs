@@ -5,18 +5,23 @@ namespace Interaction.Reactions.Meta
 {
     public class ActivationReaction : Reaction
     {
+        public enum ActivationOptions
+        {
+            Enabled,
+            Disabled
+        }
+
         [Tooltip("List of the objects that will be triggered.")]
         public GameObject[] targets;
 
-        [Tooltip("If enable, the targets will be activated. If disabled, the targets will be deactivated.")]
-        public bool activateTargets;
+        public ActivationOptions activation;
 
 
         protected override bool React(Actor actor, RaycastHit? hit)
         {
             foreach (var target in targets)
             {
-                target.SetActive(activateTargets);
+                target.SetActive(activation == ActivationOptions.Enabled);
             }
 
             return true;
