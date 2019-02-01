@@ -20,8 +20,8 @@ namespace Interaction.Reactions.Spectator
         protected new void Awake()
         {
             base.Awake();
-            SpectatorFeet = GameObject.FindWithTag("Player");
             SpectatorHead = GameObject.FindWithTag("MainCamera");
+            SpectatorFeet = SpectatorHead.transform.parent.gameObject;
         }
 
         protected new void Start()
