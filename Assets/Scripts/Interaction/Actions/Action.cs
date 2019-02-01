@@ -62,6 +62,7 @@ namespace Interaction.Actions
         {
             if (!specifyReactions)
                 reactions = GetTargetedReactions();
+            reactions.RemoveAll(reaction => reaction == null);
             return reactions;
         }
 
