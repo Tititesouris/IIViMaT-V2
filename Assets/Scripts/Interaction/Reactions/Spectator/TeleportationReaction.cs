@@ -40,6 +40,7 @@ namespace Interaction.Reactions.Spectator
 
         private IEnumerator Teleport()
         {
+            SpectatorFeet.GetComponent<SpectatorViewMode>().SetViewMode(SpectatorViewMode.ViewMode.FreeView, null);
             var startTime = Time.time;
             var startPos = SpectatorHead.transform.position;
             var destination = teleportTo.transform.position;
