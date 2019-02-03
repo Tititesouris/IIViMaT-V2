@@ -29,8 +29,10 @@ public class ActionEditor : IivimatEditor
     protected override void DrawGui()
     {
         var action = (Action) target;
+        EditorGUIUtility.labelWidth = 120;
         EditorGUILayout.Space();
         EditorGUILayout.PropertyField(_actionName);
+        EditorGUIUtility.labelWidth = 150;
 
         EditorGUILayout.Space();
         if (action.transform.childCount == 0)
@@ -55,6 +57,8 @@ public class ActionEditor : IivimatEditor
             GUI.enabled = false;
             action.specifyReactions = false;
         }
+        
+        EditorGUIUtility.labelWidth = 120;
 
         var specifyReactionsLabel = new GUIContent("Specify reactions",
             "If enabled, allows you to specify which reactions this action will trigger."
@@ -65,6 +69,7 @@ public class ActionEditor : IivimatEditor
 
         if (action.specifyReactions)
             ShowReactions(action, reactions);
+        EditorGUIUtility.labelWidth = 150;
 
         EditorGUILayout.Space();
     }

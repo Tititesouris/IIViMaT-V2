@@ -24,7 +24,7 @@ namespace Interaction.Reactions.Transform
                     transform.localScale = Vector3.Scale(actor.transform.localScale, transformValues);
                     break;
                 case RelativeToOptions.Head:
-                    transform.localScale = Vector3.Scale(UnityEngine.Camera.current.transform.localScale, transformValues);
+                    transform.localScale = Vector3.Scale(Camera.main.transform.localScale, transformValues);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

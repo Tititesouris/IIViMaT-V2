@@ -19,7 +19,7 @@ namespace Interaction.Reactions.Transform
                     relativeTo == RelativeToOptions.Self ? transform :
                     relativeTo == RelativeToOptions.Object ? referenceObject.transform :
                     relativeTo == RelativeToOptions.Actor ? actor.transform :
-                    UnityEngine.Camera.current.transform;
+                    Camera.main.transform;
 
                 var pos = reference.position + transformValues;
                 if (relativeHeading)

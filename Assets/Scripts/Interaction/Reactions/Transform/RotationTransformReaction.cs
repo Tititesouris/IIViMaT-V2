@@ -26,7 +26,7 @@ namespace Interaction.Reactions.Transform
                     transform.RotateAround(actor.transform.position, transformValues, angle);
                     break;
                 case RelativeToOptions.Head:
-                    transform.RotateAround(Camera.current.transform.position, transformValues, angle);
+                    transform.RotateAround(Camera.main.transform.position, transformValues, angle);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -24,7 +24,7 @@ namespace Interaction.Reactions.Transform
                     transform.rotation = actor.transform.rotation * Quaternion.Euler(transformValues);
                     break;
                 case RelativeToOptions.Head:
-                    transform.rotation = UnityEngine.Camera.current.transform.rotation * Quaternion.Euler(transformValues);
+                    transform.rotation = Camera.main.transform.rotation * Quaternion.Euler(transformValues);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
