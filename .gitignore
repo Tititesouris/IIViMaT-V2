@@ -3,6 +3,7 @@
 !/.gitignore
 !/Assets
 !/ProjectSettings
+!/*.pdf
 
 Assets/Plugins*
 ProjectSettings/ProjectVersion.txt
